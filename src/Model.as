@@ -9,6 +9,15 @@ package
 	 */
 	public class Model
 	{
+		public static const LAMBDA:String = "lbd";//λ
+		public static const XO:String = "x0";
+		public static const DELTA:String = "d";//∂ ∂ ∆ δ
+		
+		public static const PT_L:String = "L";
+		public static const EPSILON:String = "E";//ε Ε
+		public static const FXO:String = "f(x0)"; //ƒ
+		public static const FLAMBDA:String = "f(lbd)";
+		
 		private var _lambda:Number;
 		private var _x0:Number;
 		private var _delta:Number;
@@ -17,7 +26,7 @@ package
 		private var _epsilon:Number;
 		
 		public var evtDispatcher:EventDispatcher = new EventDispatcher();
-		private var evtChange:Event = new Event(Event.CHANGE, true);
+		//private var evtChange:Event = new Event(Event.CHANGE, true);
 		
 		private var currentFunction:Function;
 		private var currentFunctionType:String = "";
@@ -103,12 +112,9 @@ package
 				}
 				currentFunction = funcoesDescontinuas[currentSortN];
 			}
-			dispatchChangeEvent();
-		}
-		
-		private function dispatchChangeEvent():void
-		{
-			evtDispatcher.dispatchEvent(evtChange);
+			
+			var evt:ModelEvent = new ModelEvent(ModelEvent.CHANGE_FUNCTION, true);
+			evtDispatcher.dispatchEvent(evt);
 		}
 		
 		public function get lambda():Number 
@@ -119,7 +125,9 @@ package
 		public function set lambda(value:Number):void 
 		{
 			_lambda = value;
-			dispatchChangeEvent();
+			
+			var evt:ModelEvent = new ModelEvent(ModelEvent.CHANGE_FLAMBDA, true);
+			evtDispatcher.dispatchEvent(evt);
 		}
 		
 		public function get x0():Number 
@@ -130,7 +138,9 @@ package
 		public function set x0(value:Number):void 
 		{
 			_x0 = value;
-			dispatchChangeEvent();
+			
+			var evt:ModelEvent = new ModelEvent(ModelEvent.CHANGE_FX0, true);
+			evtDispatcher.dispatchEvent(evt);
 		}
 		
 		public function get delta():Number 
@@ -141,7 +151,7 @@ package
 		public function set delta(value:Number):void 
 		{
 			_delta = value;
-			dispatchChangeEvent();
+			//dispatchChangeEvent();
 		}
 		
 		public function get ptL():Number 
@@ -152,7 +162,7 @@ package
 		public function set ptL(value:Number):void 
 		{
 			_ptL = value;
-			dispatchChangeEvent();
+			//dispatchChangeEvent();
 		}
 		
 		public function get epsilon():Number 
@@ -163,7 +173,7 @@ package
 		public function set epsilon(value:Number):void 
 		{
 			_epsilon = value;
-			dispatchChangeEvent();
+			//dispatchChangeEvent();
 		}
 		
 		public function get fLambda():Number 

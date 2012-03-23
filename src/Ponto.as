@@ -17,6 +17,12 @@ package
 			addChild(pt);
 		}
 		
+		override public function set name(value:String):void
+		{
+			pt.label.text = value;
+			super.name = value;
+		}
+		
 	}
 
 }

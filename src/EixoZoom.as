@@ -17,12 +17,14 @@ package
 		private var axis:AxisX;
 		private var xmin:Number;
 		private var xmax:Number;
-		private var widthAxis:Number;
+		public var widthAxis:Number;
 		private var delta:Number;
 		
 		private var leftBracket:LeftBracket;
 		private var rightBracket:RightBracket;
 		private var bracketPoint:Ponto;
+		
+		private var brackets:Array = [];
 		private var pontos:Array = [];
 		
 		private var missingLeftBracket:MissingBracketLeft;
@@ -85,6 +87,7 @@ package
 			var newXmax:Number = bracketPoint.eixoPt + newHalfRange;
 			
 			setRange(newXmin, newXmax);
+			dispatchEvent(new ModelEvent(ModelEvent.CHANGE_ZOOM, true));
 		}
 		
 		private function zoomOut(e:TimerEvent):void 
@@ -94,6 +97,7 @@ package
 			var newXmax:Number = bracketPoint.eixoPt + newHalfRange;
 			
 			setRange(newXmin, newXmax);
+			dispatchEvent(new ModelEvent(ModelEvent.CHANGE_ZOOM, true));
 		}
 		
 		private function stopZoom(e:MouseEvent):void 
@@ -133,6 +137,12 @@ package
 		{
 			draggingPt.x = Math.max(0, Math.min(widthAxis, this.mouseX));
 			draggingPt.eixoPt = axis.pixel2x(draggingPt.x);
+			
+			if(draggingPt.name == Model.LAMBDA){
+				var evt:ModelEvent = new ModelEvent(ModelEvent.CHANGE_LAMBDA, true);
+				evt.propValue = draggingPt.eixoPt;
+				dispatchEvent(evt);
+			}
 		}
 		
 		private function stopDraggingPoint(e:MouseEvent):void 
@@ -142,22 +152,23 @@ package
 			draggingPt = null;
 		}
 		
-		public function createBrackets(nome:String, centralPt:Number, delta:Number, lock:Boolean = false):void 
+		public function createBrackets(nome:String, centralPt:Number, delta:Number, lockPt:Boolean = false, lockBrackets:Boolean = false):void 
 		{
 			this.delta = delta;
 			
 			bracketPoint = new Ponto();
+			bracketPoint.name = nome;
 			addChild(bracketPoint);
 			bracketPoint.x = axis.x2pixel(centralPt);
 			bracketPoint.eixoPt = centralPt;
 			
 			leftBracket = new LeftBracket();
 			addChild(leftBracket);
-			leftBracket.x = axis.x2pixel(centralPt - delta);
+			//leftBracket.x = axis.x2pixel(centralPt - delta);
 			
 			rightBracket = new RightBracket();
 			addChild(rightBracket);
-			rightBracket.x = axis.x2pixel(centralPt + delta);
+			//rightBracket.x = axis.x2pixel(centralPt + delta);
 			
 			bracketPoint.addEventListener(MouseEvent.MOUSE_DOWN, initDragBracketPoint);
 			leftBracket.addEventListener(MouseEvent.MOUSE_DOWN, initDragBracket);
@@ -175,15 +186,21 @@ package
 			missingRightBracket.y = missingRightBracket.height / 2;
 			addChild(missingRightBracket);
 			
-			if (lock) {
+			if (lockPt) {
 				bracketPoint.mouseEnabled = false;
-				leftBracket.mouseEnabled = false;
-				rightBracket.mouseEnabled = false;
 			}else {
 				bracketPoint.buttonMode = true;
+			}
+			
+			if(lockBrackets){
+				leftBracket.mouseEnabled = false;
+				rightBracket.mouseEnabled = false;
+			}else{
 				leftBracket.buttonMode = true;
 				rightBracket.buttonMode = true;
 			}
+			
+			posicionaBrackets();
 		}
 		
 		private function initDragBracketPoint(e:MouseEvent):void 
@@ -197,6 +214,10 @@ package
 			bracketPoint.x = Math.max(0, Math.min(widthAxis, this.mouseX));
 			bracketPoint.eixoPt = axis.pixel2x(bracketPoint.x);
 			posicionaBrackets();
+			
+			var evt:ModelEvent = new ModelEvent(ModelEvent.CHANGE_X0, true);
+			evt.propValue = bracketPoint.eixoPt;
+			dispatchEvent(evt);
 		}
 		
 		private function stopDraggingBracketPoint(e:MouseEvent):void 
@@ -248,6 +269,10 @@ package
 			
 			delta = Math.min(dMax , Math.max(dMin, newDelta));
 			posicionaBrackets();
+			
+			var evt:ModelEvent = new ModelEvent(ModelEvent.CHANGE_DELTA, true);
+			evt.propValue = delta;
+			dispatchEvent(evt);
 		}
 		
 		private function stopDraggingBracket(e:MouseEvent):void 
@@ -265,6 +290,15 @@ package
 			redefineAll();
 		}
 		
+		public function verificaPontosFora():void
+		{
+			for each (var item:Ponto in pontos) 
+			{
+				if (item.x < 0 || item.x > widthAxis) item.visible = false;
+				else item.visible = true;
+			}
+		}
+		
 		private function redefineAll():void 
 		{
 			bracketPoint.x = axis.x2pixel(bracketPoint.eixoPt);
@@ -273,8 +307,27 @@ package
 			{
 				item.x = axis.x2pixel(item.eixoPt);
 			}
+			verificaPontosFora();
 		}
 		
+		public function setPontoPosition(prop:String, pt:Number):void
+		{
+			var mcProp:Ponto = Ponto(this.getChildByName(prop));
+			mcProp.eixoPt = pt;
+			
+			redefineAll();
+		}
+		
+		public function getBracketX():Number
+		{
+			return bracketPoint.x;
+		}
+		
+		public function getPontoPosition(prop:String):Number
+		{
+			var mcProp:Ponto = Ponto(this.getChildByName(prop));
+			return mcProp.x;
+		}
 	}
 
 }
