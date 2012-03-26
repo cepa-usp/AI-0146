@@ -19,7 +19,7 @@ package BaseAssets
 		private var feedbackScreen:FeedBackScreen;
 		
 		private var bordaAtividade:Borda;
-		private var botoes:Botoes;
+		public var botoes:Botoes;
 		
 		public function BaseMain() 
 		{
@@ -85,7 +85,7 @@ package BaseAssets
 			botoes.creditos.addEventListener(MouseEvent.CLICK, openCreditos);
 			botoes.resetButton.addEventListener(MouseEvent.CLICK, reset);
 			
-			createToolTips();
+			//createToolTips();
 		}
 		
 		/**
