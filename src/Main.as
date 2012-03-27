@@ -34,6 +34,7 @@ package
 		private var nomeFlambda:NomeF;
 		
 		private var textoExplicativo:TextoExplicativo;
+		private var showAnswer:Boolean = false;
 		
 		public function Main():void 
 		{
@@ -69,17 +70,18 @@ package
 			axisX2.x = (stage.stageWidth - axisX2.width) / 2;
 			axisX2.y = 300;
 			
-			axisX1.createBrackets(Model.XO, modelo.x0, modelo.delta, true);
+			axisX1.createBrackets(Model.XO, modelo.x0, modelo.delta, Model.DELTA, true);
 			axisX1.adicionaPonto(Model.LAMBDA, modelo.lambda, false, true);
 			
-			axisX2.createBrackets(Model.PT_L, modelo.ptL, modelo.epsilon, false, true);
+			axisX2.createBrackets(Model.PT_L, modelo.ptL, modelo.epsilon, Model.EPSILON, false, true);
 			axisX2.adicionaPonto(Model.FXO, modelo.fX0, true);
 			axisX2.adicionaPonto(Model.FLAMBDA, modelo.fLambda, true);
 			
 			lambdaFlambda = new Sprite();
 			addChild(lambdaFlambda);
 			x0Fx0 = new Sprite();
-			//addChild(x0Fx0);
+			addChild(x0Fx0);
+			x0Fx0.visible = showAnswer;
 			
 			indicadorLambda = new IndicadorF();
 			addChild(indicadorLambda);
@@ -90,16 +92,16 @@ package
 			indicadorLambda2.visible = false;
 			
 			indicadorX0 = new IndicadorF();
-			//addChild(indicadorX0);
-			indicadorX0.visible = false;
+			addChild(indicadorX0);
+			indicadorX0.visible = showAnswer;
 			
 			indicadorX02 = new IndicadorF2();
-			//addChild(indicadorX02);
-			indicadorX02.visible = false;
+			addChild(indicadorX02);
+			indicadorX02.visible = showAnswer;
 			
 			nomeFx0 = new NomeF();
-			//addChild(nomeFx0);
-			nomeFx0.visible = false;
+			addChild(nomeFx0);
+			nomeFx0.visible = showAnswer;
 			
 			nomeFlambda = new NomeF();
 			addChild(nomeFlambda);
@@ -136,7 +138,7 @@ package
 		{
 			axisX1.getProperty(Model.LAMBDA).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("lambda é um ponto da vizinhança de x_0.") } );
 			axisX1.getProperty(Model.XO).addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("x_0 é valor do qual lambda se aproxima indefinidamente.") } );
-			//axisX1.getProperty(Model.DELTA).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("delta é o tamanho da vizinhança de x_0.") } );
+			axisX1.deltaLabel.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("delta é o tamanho da vizinhança de x_0.") } );
 			axisX1.leftBracket.addEventListener(MouseEvent.MOUSE_OVER, function():void { 
 				if (axisX1.leftBracket.x < 0) setMessage("limite inferior de x_0(não visível).");
 				else setMessage("limite inferior de x_0.");
@@ -149,7 +151,7 @@ package
 			axisX2.getProperty(Model.FLAMBDA).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(lambda) é o valor de f, calculado em x = lambda.") } );
 			axisX2.getProperty(Model.FXO).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(x_0) é o valor de f, calculado em x = x_0.") } );
 			axisX2.getProperty(Model.PT_L).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("L é o limite procurado.") } );
-			//axisX2.getProperty(Model.EPSILON).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("epsilon é o tamanho da vizinhança de L.") } );
+			axisX2.deltaLabel.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("epsilon é o tamanho da vizinhança de L.") } );
 			axisX2.leftBracket.addEventListener(MouseEvent.MOUSE_OVER, function():void {
 				if (axisX2.leftBracket.x < 0) setMessage("limite inferior de L(não visível).");
 				else setMessage("limite inferior de L.");
@@ -159,12 +161,17 @@ package
 				else setMessage("limite superior de L.");
 			} );
 			
-			stage.addEventListener(MouseEvent.MOUSE_OUT, function(e:MouseEvent):void { setMessage("") } );
+			stage.addEventListener(MouseEvent.MOUSE_OUT, setLabelOfState);
 			
 			botoes.tutorialBtn.addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("Reinicia o tutorial (balões).")});
 			botoes.orientacoesBtn.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("Orientações e objetivos pedagógicos.")});
 			botoes.resetButton.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("Reinicia a atividade interativa (retoma a situação inicial).")});
 			botoes.creditos.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("Licença e créditos desta atividade interativa.")});
+		}
+		
+		private function setLabelOfState(e:MouseEvent):void
+		{
+			setMessage("");
 		}
 		
 		private function setMessage(msg:String):void
@@ -192,7 +199,7 @@ package
 					indicadorX02.y = posFx0.y - distToPoint;
 					indicadorX02.scaleX = 1;
 					indicadorX02.nome.scaleX = 1;
-					indicadorX02.visible = true;
+					indicadorX02.visible = showAnswer;
 				}
 			}else if (posX0.x > axisX1.x + axisX1.widthAxis) {
 				if (posFx0.x < axisX1.x || posFx0.x > axisX1.x + axisX1.widthAxis) {
@@ -208,7 +215,7 @@ package
 					indicadorX02.y = posFx0.y - distToPoint;
 					indicadorX02.scaleX = -1;
 					indicadorX02.nome.scaleX = -1;
-					indicadorX02.visible = true;
+					indicadorX02.visible = showAnswer;
 				}
 			}else {
 				if (posFx0.x < axisX1.x) {
@@ -219,7 +226,7 @@ package
 					indicadorX0.y = posX0.y + distToPoint;
 					indicadorX0.scaleX = 1;
 					indicadorX0.nome.scaleX = 1;
-					indicadorX0.visible = true;
+					indicadorX0.visible = showAnswer;
 				}else if (posFx0.x > axisX1.x + axisX1.widthAxis) {
 					x0Fx0.graphics.clear();
 					nomeFx0.visible = false;
@@ -228,10 +235,11 @@ package
 					indicadorX0.y = posX0.y + distToPoint;
 					indicadorX0.scaleX = -1;
 					indicadorX0.nome.scaleX = -1;
-					indicadorX0.visible = true;
+					indicadorX0.visible = showAnswer;
 				}else {
 					indicadorX0.visible = false;
 					indicadorX02.visible = false;
+					x0Fx0.visible = showAnswer;
 					x0Fx0.graphics.clear();
 					x0Fx0.graphics.beginFill(0x800000);
 					x0Fx0.graphics.drawCircle(posX0.x, posX0.y + distToPoint, 3);
@@ -243,11 +251,18 @@ package
 					x0Fx0.graphics.lineTo(posFx0.x - 5, posFx0.y - distToPoint - 15);
 					x0Fx0.graphics.lineTo(posFx0.x + 5, posFx0.y - distToPoint - 15);
 					x0Fx0.graphics.lineTo(posFx0.x, posFx0.y - distToPoint);
-					nomeFx0.x = posFx0.x;
-					nomeFx0.y = (posFx0.y - posX0.y) / 2 + posX0.y;
-					nomeFx0.visible = true;
+					nomeFx0.x = (posFx0.x - posX0.x) / 2 + posX0.x;
+					nomeFx0.y = (posFx0.y - posX0.y) / 2 + posX0.y - distToPoint / 2;
+					nomeFx0.visible = showAnswer;
 				}
 			}
+		}
+		
+		public function setShowAnswer(value:Boolean):void
+		{
+			showAnswer = value;
+			axisX2.setVisible(Model.FXO, !showAnswer);
+			desenhaIndicadorXfX();
 		}
 		
 		private function desenhaIndicadorLambdafLambda():void 
@@ -321,8 +336,8 @@ package
 					lambdaFlambda.graphics.lineTo(posFlambda.x - 5, posFlambda.y - distToPoint - 15);
 					lambdaFlambda.graphics.lineTo(posFlambda.x + 5, posFlambda.y - distToPoint - 15);
 					lambdaFlambda.graphics.lineTo(posFlambda.x, posFlambda.y - distToPoint);
-					nomeFlambda.x = posFlambda.x;
-					nomeFlambda.y = (posFlambda.y - posLambda.y) / 2 + posLambda.y;
+					nomeFlambda.x = (posFlambda.x - posLambda.x) / 2 + posLambda.x;
+					nomeFlambda.y = (posFlambda.y - posLambda.y) / 2 + posLambda.y - distToPoint / 2;
 					nomeFlambda.visible = true;
 				}
 			}
@@ -387,7 +402,7 @@ package
 		 */
 		override public function reset(e:MouseEvent = null):void
 		{
-			
+			setShowAnswer(!showAnswer);
 		}
 		
 	}

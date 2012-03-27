@@ -6,6 +6,8 @@ package
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 	
@@ -20,6 +22,9 @@ package
 		private var xmax:Number;
 		public var widthAxis:Number;
 		private var delta:Number;
+		private var sprDelta:Sprite;
+		private var deltaNome:String;
+		public var deltaLabel:TextField;
 		
 		public var leftBracket:LeftBracket;
 		public var rightBracket:RightBracket;
@@ -152,16 +157,31 @@ package
 		private var showingName:Boolean = false;
 		private function showPtNumber(e:MouseEvent):void 
 		{
-			var pt:Ponto = Ponto(e.target);
-			pt.setLabel(pt.nomeBase + " = " + pt.eixoPt.toFixed(2));
-			showingName = true;
+			trace(e.target);
+			if(e.target is Ponto){
+				var pt:Ponto = Ponto(e.target);
+				pt.setLabel(pt.nomeBase + " = " + pt.eixoPt.toFixed(2));
+				showingName = true;
+			}else {
+				var txt:TextField = TextField(e.target);
+				txt.width = 200;
+				txt.text = deltaNome + " = " + delta.toFixed(2);
+				txt.width = txt.textWidth + 5;
+			}
 		}
 		
 		private function hidePtNumber(e:MouseEvent):void 
 		{
-			showingName = false;
-			var pt:Ponto = Ponto(e.target);
-			pt.setLabel(pt.nomeBase);
+			if(e.target is Ponto){
+				showingName = false;
+				var pt:Ponto = Ponto(e.target);
+				pt.setLabel(pt.nomeBase);
+			}else {
+				var txt:TextField = TextField(e.target);
+				txt.width = 200;
+				txt.text = deltaNome;
+				txt.width = txt.textWidth + 5;
+			}
 		}
 		
 		private var draggingPt:Ponto;
@@ -222,9 +242,25 @@ package
 			draggingPt = null;
 		}
 		
-		public function createBrackets(nome:String, centralPt:Number, delta:Number, lockPt:Boolean = false, lockBrackets:Boolean = false):void 
+		public function createBrackets(nome:String, centralPt:Number, delta:Number, deltaNome:String, lockPt:Boolean = false, lockBrackets:Boolean = false):void 
 		{
 			this.delta = delta;
+			
+			sprDelta = new Sprite();
+			addChild(sprDelta);
+			this.deltaNome = deltaNome;
+			
+			deltaLabel = new TextField();
+			deltaLabel.defaultTextFormat = new TextFormat("Times New Roman", 15, 0x7B5A15);
+			deltaLabel.multiline = false;
+			deltaLabel.width = 200;
+			deltaLabel.text = deltaNome;
+			deltaLabel.width = deltaLabel.textWidth + 5;
+			deltaLabel.height = deltaLabel.textHeight;
+			deltaLabel.selectable = false;
+			addChild(deltaLabel);
+			deltaLabel.addEventListener(MouseEvent.MOUSE_OVER, showPtNumber);
+			deltaLabel.addEventListener(MouseEvent.MOUSE_OUT, hidePtNumber);
 			
 			bracketPoint = new Ponto();
 			bracketPoint.nomeBase = nome;
@@ -301,7 +337,7 @@ package
 			stage.removeEventListener(MouseEvent.MOUSE_UP, stopDraggingBracketPoint);
 		}
 		
-		private var offsetBracketsOffScreen:Number = 10;
+		private var offsetBracketsOffScreen:Number = 20;
 		private function posicionaBrackets():void
 		{
 			var leftX:Number = axis.x2pixel(bracketPoint.eixoPt - delta);
@@ -362,6 +398,108 @@ package
 				}
 			}
 			
+			drawDelta();
+		}
+		
+		private var widthArrow:Number = 10;
+		private var heightArrow:Number = 10;
+			
+		private function drawDelta():void
+		{
+			var yAdjust:Number = 30;
+			var sprHalfWidth:Number;
+			
+			sprDelta.graphics.clear();
+			sprDelta.graphics.lineStyle(1, 0x000080);
+			sprDelta.graphics.moveTo(bracketPoint.x, bracketPoint.y - yAdjust);
+			
+			if (rightBracket.x < widthAxis) {
+				drawleftArrow(bracketPoint.x, bracketPoint.y - yAdjust);
+				sprDelta.graphics.lineTo(rightBracket.x, rightBracket.y - yAdjust);
+				drawRightArrow(rightBracket.x, rightBracket.y - yAdjust);
+				sprHalfWidth = sprDelta.width / 2;
+			}else if (leftBracket.x > 0) {
+				drawRightArrow(bracketPoint.x, bracketPoint.y - yAdjust);
+				sprDelta.graphics.lineTo(leftBracket.x, leftBracket.y - yAdjust);
+				drawleftArrow(leftBracket.x, leftBracket.y - yAdjust);
+				sprHalfWidth = -sprDelta.width / 2;
+			}else {
+				drawleftArrow(bracketPoint.x, bracketPoint.y - yAdjust);
+				sprDelta.graphics.lineTo(widthAxis, bracketPoint.y - yAdjust);
+				dashTo(widthAxis, bracketPoint.y - yAdjust, rightBracket.x, bracketPoint.y - yAdjust, 2, 2, sprDelta);
+				drawRightArrow(rightBracket.x, rightBracket.y - yAdjust);
+				sprHalfWidth = sprDelta.width / 2;
+			}
+			
+			deltaLabel.x = bracketPoint.x + sprHalfWidth - deltaLabel.width / 2;
+			deltaLabel.y = bracketPoint.y - yAdjust - deltaLabel.height - 5;
+		}
+		
+		private function drawleftArrow(ptX:Number, ptY:Number):void
+		{
+			sprDelta.graphics.curveTo(ptX + heightArrow / 2, ptY, ptX + heightArrow, ptY - widthArrow / 2);
+			sprDelta.graphics.moveTo(ptX, ptY);
+			sprDelta.graphics.curveTo(ptX + heightArrow / 2, ptY, ptX + heightArrow, ptY + widthArrow / 2);
+			sprDelta.graphics.moveTo(ptX, ptY);
+		}
+		
+		private function drawRightArrow(ptX:Number, ptY:Number):void
+		{
+			sprDelta.graphics.curveTo(ptX - heightArrow / 2, ptY, ptX - heightArrow, ptY - widthArrow / 2);
+			sprDelta.graphics.moveTo(ptX, ptY);
+			sprDelta.graphics.curveTo(ptX - heightArrow / 2, ptY, ptX - heightArrow, ptY + widthArrow / 2);
+			sprDelta.graphics.moveTo(ptX, ptY);
+		}
+		
+		/*
+		 * A função dashTo desenha uma linha tracejada.
+		 * 
+		 * by Ric Ewing (ric@formequalsfunction.com) - version 1.2 - 5.3.2002
+		 * 
+		 * startx, starty = beginning of dashed line
+		 * endx, endy = end of dashed line
+		 * len = length of dash
+		 * gap = length of gap between dashes
+		 */
+		private function dashTo (startx:Number, starty:Number, endx:Number, endy:Number, len:Number, gap:Number, spr:Sprite) : void {
+			
+			// init vars
+			var seglength, delta, deltax, deltay, segs, cx, cy, radians;
+			// calculate the legnth of a segment
+			seglength = len + gap;
+			// calculate the length of the dashed line
+			deltax = endx - startx;
+			deltay = endy - starty;
+			delta = Math.sqrt((deltax * deltax) + (deltay * deltay));
+			// calculate the number of segments needed
+			segs = Math.floor(Math.abs(delta / seglength));
+			// get the angle of the line in radians
+			radians = Math.atan2(deltay,deltax);
+			// start the line here
+			cx = startx;
+			cy = starty;
+			// add these to cx, cy to get next seg start
+			deltax = Math.cos(radians)*seglength;
+			deltay = Math.sin(radians)*seglength;
+			// loop through each seg
+			for (var n = 0; n < segs; n++) {
+				spr.graphics.moveTo(cx,cy);
+				spr.graphics.lineTo(cx+Math.cos(radians)*len,cy+Math.sin(radians)*len);
+				cx += deltax;
+				cy += deltay;
+			}
+			// handle last segment as it is likely to be partial
+			spr.graphics.moveTo(cx,cy);
+			delta = Math.sqrt((endx-cx)*(endx-cx)+(endy-cy)*(endy-cy));
+			if(delta>len){
+				// segment ends in the gap, so draw a full dash
+				spr.graphics.lineTo(cx+Math.cos(radians)*len,cy+Math.sin(radians)*len);
+			} else if(delta>0) {
+				// segment is shorter than dash so only draw what is needed
+				spr.graphics.lineTo(cx+Math.cos(radians)*delta,cy+Math.sin(radians)*delta);
+			}
+			// move the pen to the end position
+			spr.graphics.moveTo(endx,endy);
 		}
 		
 		private var diffXpos:Number;
@@ -415,7 +553,8 @@ package
 			{
 				if (item.x < 0 || item.x > widthAxis) item.visible = false;
 				else {
-					if(invisiblesEver[item] == null) item.visible = true;
+					if (invisiblesEver[item] == null) item.visible = true;
+					else item.visible = !invisiblesEver[item];
 				}
 			}
 		}
@@ -455,6 +594,22 @@ package
 			var mcProp:Ponto = Ponto(this.getChildByName(prop));
 			
 			return mcProp;
+		}
+		
+		public function setLock(prop:String, value:Boolean):void
+		{
+			var mcProp:Ponto = Ponto(this.getChildByName(prop));
+			
+			lockList[mcProp] = value;
+			redefineAll();
+		}
+		
+		public function setVisible(prop:String, value:Boolean):void
+		{
+			var mcProp:Ponto = Ponto(this.getChildByName(prop));
+			
+			invisiblesEver[mcProp] = value;
+			redefineAll();
 		}
 	}
 
