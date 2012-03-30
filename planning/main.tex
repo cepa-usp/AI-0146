@@ -1,0 +1,170 @@
+\documentclass[fleqn,12pt]{article}
+    \usepackage[utf8]{inputenc}
+   \usepackage[T1]{fontenc}
+    \usepackage{bookman}
+    \usepackage[brazil]{babel}
+    \usepackage{xcolor}
+    \usepackage{amsmath}
+    \usepackage{amsfonts}
+    \usepackage[margin=2cm]{geometry}
+    \usepackage{txfonts}
+    \usepackage{xspace}
+    \usepackage{url}
+    \usepackage{indentfirst}
+    
+    
+    % Minhas definições
+    \newenvironment{ct}{\begin{quotation}\color{red!30!black}\sffamily\small}{\end{quotation}} % Comentários técnicos
+    \newenvironment{cp}{\begin{quotation}\color{green!30!black}\sffamily\small}{\end{quotation}} % Comentários didático-pedagógicos
+    \newcommand\ctc[1]{\textcolor{red!30!black}{{\sffamily#1}}} % Comentário técnico curto
+    \newcommand\cpc[1]{\textcolor{green!30!black}{{\sffamily#1}}} % Comentário didático-pedagígico curto
+    \newcommand\foreign[1]{\textsl{#1}}
+    \newcommand\etc{\foreign{etc}}
+    \newcommand\proceed{\textcolor{green}{$\medbullet$}\xspace}
+    \newcommand\detect{\textcolor{red}{$\medbullet$}\xspace}
+    \newcommand\pt{\ensuremath{(x,y)}\xspace}
+    \newcommand\eg{\foreign{eg}}
+    \newcommand\code[1]{\textsf{#1}}
+    \newcommand\ie{\foreign{ie}}
+    \newcommand\condicional[2]{$\lfloor$%
+	\textsf{\textcolor{blue}{{\footnotesize #1}}}
+	$\leadsto$ #2%
+	$\rfloor$}
+    \newcommand\ptzero{\ensuremath{(x_0,y_0)}\xspace}
+    \newcommand\forum[1]{\colorbox{yellow}{Discutir no fórum: #1}} 
+
+    % Título e autor
+    \title{Roteiro de produção da AI-0146 (limites)}
+    \author{Dr. Ivan Ramos Pagnossin}
+   \date{\today}
+
+%    \hyphenation{vi-zin-han-ça va-ri-á-ve-is}
+
+\begin{document}
+
+    \maketitle
+    
+
+
+    %-------------------------------
+    \section{Limites e continuidade}
+
+    O valor $f(x)$ para $x = x_0$ é simplesmente $f(x_0)$. Mas e se $x$ for um número muito \emph{próximo} de $x_0$, embora \emph{diferente}? Intuitivamente, podemos responder: ``$f(x)$ será muito próximo de $f(x_0)$'' (é possível finalizar esta frase com ``embora diferente''?). Este realmente é o caso \emph{na maioria das vezes}, mas nem sempre. Veja esta equação:
+    \begin{equation*}
+	\lim_{\scriptsize x  \to x_0} f(x) = L.
+    \end{equation*}
+
+    Ela deve ser lida assim: o limite de $f$ quando $x$ tende a $x_0$ ($x \to x_0$) é igual a $L$. Ou seja, se $x$ for muito \emph{próximo} de $x_0$, $f(x)$ será \emph{igual} a $L$, um número que não conhecemos a priori. $L$ é dito ``o limite'' de $f$ em $x_0$.
+
+    Dois detalhes podem ter passado despercebidos: primeiro, $L$ não é necessariamente igual a $f(x_0,y_0)$ (veremos que isto tem a ver com a \emph{continuidade} de $f$). Segundo, o que significa dizer que $x$ é ``próximo'' de $x_0$?
+
+    Para responder esta pergunta, veja a figura acima. \ptzero é um \emph{ponto interior} ao domínio de $f$ (você pode arrastá-lo), enquanto \pt é um ponto qualquer da vizinhança de \ptzero, o círculo de raio $\delta > 0$ (experimente arrastar \pt também). \proceed
+
+    \forum{Por que $x_0$ deve ser um ponto interior ao domínio de $f$?}
+
+    A função $f$ é calculada sempre em \pt (nunca em \ptzero), e resulta no número $f(x,y)$, também apresentado na figura, na reta $\mathbb{R}$ à direita [você só pode alterar $f(x,y)$ mexendo em \pt]. Há também o ponto $L$, no centro do intervalo aberto $]L - \varepsilon, L + \varepsilon[$, com $\varepsilon > 0$. Arraste $L$ e os colchetes ao redor dele para entender a construção da figura antes de continuar. 
+
+    Caso não se lembre, dizer que $f(x,y)$ pertence ($\in$) ao intervalo $]L - \varepsilon, L + \varepsilon[$ é o mesmo que escrever:
+    \begin{equation*}
+	L - \varepsilon < f(x,y) < L + \varepsilon.
+    \end{equation*}
+
+    Ou ainda, que a distância de $f(x,y)$ até $L$ é menor que $\varepsilon$:
+    \begin{equation*}
+	|L - f(x,y)| < \varepsilon.
+    \end{equation*} \proceed
+
+    \forum{Por que o \foreign{software} não permite mover $f(x,y)$? Qual é a implicação disso em $(x,y)$?}
+
+    Com isto tudo em mente, dizer que $L$ é o limite de $f$ quando \pt tende a \ptzero significa o seguinte: se eu escolher um $\varepsilon$ arbitrariamente pequeno, você pode encontrar um $\delta$ tal que, para qualquer \pt na vizinhança de \ptzero, $f(x,y)$ pertence ao intervalo $]L - \varepsilon, L + \varepsilon[$. \proceed
+
+    \begin{ct}
+	Na AI-0117, faça $\varepsilon = 3$ e fixe-o, impedindo o usuário de alterá-lo a partir daqui.	
+    \end{ct}
+
+    Parece complicado, mas a ideia é simples. Vamos experimentá-la passo-a-passo na figura acima. Nosso objetivo é determinar $L$, partindo de um valor arbitrariamente escolhido. Não é necessário preocupar-se com valores numéricos, embora você possa vê-los passando o \foreign{mouse} por cima de $L$, $\varepsilon$, $\delta$ \etc.
+
+    \paragraph{Passo 1} Coloque \ptzero próximo de $(2,2)$ e ajuste $\delta \approx 1$ (de modo que a vizinhança fique toda dentro do domínio de $f$). Este é o ponto no qual calcularemos o limite. \proceed
+
+    \begin{ct}
+	Faça $\ptzero = (2,2)$ e $\delta = 1$ na AI-0117 se os valores ajustados pelo usuário diferirem de mais de $10\%$ desses valores.
+
+	Fixe \ptzero e $\delta$ na AI-0117, impedindo o usuário de alterá-los a partir daqui.
+    \end{ct}
+
+    \paragraph{Passo 2} Arraste $L$ para a direita, até $20$, mais ou menos. \proceed
+
+    \begin{ct}
+	Faça $L = 20$ na AI-0117 caso o valor ajustado pelo usuário difira de mais de $10\%$ desse valor.
+
+	Fixe $L$ na AI-0117, impedindo o usuário de alterá-lo a partir daqui.
+    \end{ct}
+
+    Pela definição acima, se $L \approx 20$ for o limite procurado, então podemos arrastar \pt livremente e sempre obteremos $f(x,y)$ entre os colchetes ao redor de $L$. Veja se isto acontece. \proceed
+
+    \begin{ct}
+	Libere $L$ na AI-0117, permitindo ao usuário alterá-lo a partir daqui.
+    \end{ct}
+
+    Como você pode perceber, em nenhum momento $f(x,y) \in ]L - \varepsilon, L + \varepsilon[$. Logo, $L \approx 20$ não é o valor que procuramos. Na verdade, $L$ deve estar mais próximo de $f(x,y)$.
+
+    \paragraph{Passo 3} Faça $L \approx 6$. Qual é o comportamento de $f(x,y)$ agora? \proceed
+
+    Desta vez $f(x,y)$ hora está dentro do intervalo, hora não. O problema é que a vizinhança de \ptzero está muito grande.
+
+    \paragraph{Passo 4} Faça $\delta \approx 0,2$ (use a \emph{ferramenta zoom}) ou simplesmente pression o botão ``avançar'' (eu farei isso por você). \proceed
+
+    \begin{ct}
+	Faça $\delta = 0,2$ na AI-0117 independentemente do ajuste do usuário.
+
+	Fixe $\delta$, impedindo o usuário de alterá-lo a partir daqui.
+    \end{ct}
+
+    Agora $f(x,y)$ está totalmente contido no intervalo $]L - \varepsilon, L + \varepsilon[$. \proceed No entanto, ainda pela definição de limite, eu posso reduzir $\varepsilon$ (para $1$), diminuindo assim a extensão desse intervalo, e novamente colocando $f(x,y)$ fora dele. Verifique. \proceed
+
+    \begin{ct}
+	No primeiro \proceed do parágrafo acima, faça $\varepsilon = 1$ na AI-0117 (continua fixo, não suscetível à ação do usuário).
+    \end{ct}
+
+    O que devemos fazer para corrigir isto é, novamente, aproximar $L$ de $f(x,y)$.
+
+    \paragraph{Passo 5} Faça $L = 4$ e verifique o comportamento de $f(x,y)$. \proceed
+
+    \begin{ct}
+	Faça $\varepsilon = 0,5$ na AI-0117 (continua fixo, não suscetível à ação do usuário).
+    \end{ct}
+
+    Parece que $f(x,y)$ voltou a manter-se entre os colchetes. Mas agora eu reduzi ainda mais $\varepsilon$; para $0,5$.
+
+    \paragraph{Passo 6} Reduza $\delta$ mais um pouco (não se esqueça da ferramenta de \foreign{zoom}), de modo a devolver $f(x,y)$ para o intervalo $]L - \varepsilon, L + \varepsilon[$. Ou simplesmente pressione prosseguir (eu farei isso por você).
+
+    \begin{ct}
+	Se o usuário não tiver reduzido $\delta$, faça $\delta = 0,05$ na AI-0117.
+    \end{ct}
+
+    Você percebe que eu posso continuar reduzindo $\varepsilon$, e você pode continuar ajustando $\L$ e $\delta$ de modo a manter $f(x,y)$ no intervalo $]L - \varepsilon, L + \varepsilon[$ para qualquer \pt na vizinhança de \ptzero?
+
+    \paragraph{Passo 7} Pressione o botão [ÍCONE ZOOM MENOS] algumas vezes para voltar à visualização inicial e responda: quanto vale $L$?
+
+    $L = [\qquad]$ \proceed
+
+    \begin{ct}
+	Disponibilize um \foreign{text field} para o usuário digitar a resposta. O valor esperado é $L \approx 4$.
+    \end{ct}
+
+    \condicional{Usuário errou}{A resposta correta é $L = 4$. Se você não chegou a este resultado (aproximadamente), refaça os passos acima antes de prosseguir.} Ou seja,
+
+    \begin{equation*}
+	\lim_{\scriptsize
+	    \begin{matrix}
+		x  \to 2 \\
+		y  \to 2
+	    \end{matrix}}
+	f(x,y) = 4.
+    \end{equation*}
+
+    Finalmente, note que $L = f(2,2)$. Em palavras, o limite de $f$ em \ptzero é simplesmente $f(x_0,y_0)$. Quando isto acontece, dizemos que \emph{$f$ é contínua em \ptzero}. E quando isto acontece para \emph{todos} os pontos do domínio de $f$, dizemos que \emph{$f$ é contínua} (em todos os pontos). \proceed
+
+    Acontece que este nem sempre é o caso. A figura acima agora ilustra uma outra função, diferente de $f(x,y) = xy$, e que não é contínua. Refaça os passos anteriores na busca por $L$ para $(x_0,y_0) = (2,2)$ e discuta com seus colegas no fórum: é possível determinar o limite dessa função em $(2,2)$? Por que? E que função é essa?
+
+\end{document}
