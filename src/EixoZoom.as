@@ -566,6 +566,16 @@ package
 			for each (var item:Ponto in pontos) 
 			{
 				item.x = axis.x2pixel(item.eixoPt);
+				if(item.name == Model.LAMBDA){
+					var evt:ModelEvent = new ModelEvent(ModelEvent.CHANGE_LAMBDA, true);
+					evt.propValue = item.eixoPt;
+					dispatchEvent(evt);
+				}
+				if(item.name == Model.XO){
+					var evt2:ModelEvent = new ModelEvent(ModelEvent.CHANGE_X0, true);
+					evt2.propValue = item.eixoPt;
+					dispatchEvent(evt2);
+				}
 			}
 			verificaPontosFora();
 		}
@@ -609,6 +619,18 @@ package
 			var mcProp:Ponto = Ponto(this.getChildByName(prop));
 			
 			invisiblesEver[mcProp] = value;
+			redefineAll();
+		}
+		
+		public function lockDelta(value:Boolean):void
+		{
+			lockList[leftBracket] = value;
+			lockList[rightBracket] = value;
+		}
+		
+		public function setDelta(value:Number):void
+		{
+			delta = value;
 			redefineAll();
 		}
 	}

@@ -6,6 +6,7 @@ package
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.external.ExternalInterface;
 	import flash.geom.Point;
 	
 	/**
@@ -50,6 +51,76 @@ package
 			initModelParams();
 			addListerners();
 			addListenersTextoExplicativo();
+			setExternalInterface();
+		}
+		
+		private function setExternalInterface():void 
+		{
+			if (ExternalInterface.available) {
+				ExternalInterface.addCallback("lockLambda", lockLambda);
+				ExternalInterface.addCallback("lockX0", lockX0);
+				ExternalInterface.addCallback("lockDelta", lockDelta);
+				
+				ExternalInterface.addCallback("lockL", lockL);
+				ExternalInterface.addCallback("lockEpsilon", lockEpsilon);
+				
+				ExternalInterface.addCallback("setLambda", setLambda);
+				ExternalInterface.addCallback("setX0", setX0);
+				ExternalInterface.addCallback("setDelta", setDelta);
+				
+				ExternalInterface.addCallback("setL", setL);
+				ExternalInterface.addCallback("setEpsilon", setEpsilon);
+			}
+		}
+		
+		private function setLambda(value:Number):void 
+		{
+			axisX1.setPontoPosition(Model.LAMBDA, value);
+		}
+		
+		private function setX0(value:Number):void 
+		{
+			axisX1.setPontoPosition(Model.XO, value);
+		}
+		
+		private function setDelta(value:Number):void 
+		{
+			axisX1.setDelta(value);
+		}
+		
+		private function setL(value:Number):void 
+		{
+			axisX2.setPontoPosition(Model.PT_L, value);
+		}
+		
+		private function setEpsilon(value:Number):void 
+		{
+			axisX2.setDelta(value);
+		}
+		
+		private function lockLambda(value:Boolean):void
+		{
+			axisX1.setLock(Model.LAMBDA, value);
+		}
+		
+		private function lockX0(value:Boolean):void
+		{
+			axisX1.setLock(Model.XO, value);
+		}
+		
+		private function lockDelta(value:Boolean):void
+		{
+			axisX1.lockDelta(value);
+		}
+		
+		private function lockL(value:Boolean):void
+		{
+			axisX2.setLock(Model.PT_L, value);
+		}
+		
+		private function lockEpsilon(value:Boolean):void
+		{
+			axisX2.lockDelta(value);
 		}
 		
 		private function initModelParams():void 
