@@ -13,7 +13,7 @@ function init () {
 	var flashvars = {};
 	flashvars.ai = "swf/AI-0146.swf";
 	flashvars.width = "700";
-	flashvars.height = "500";
+	flashvars.height = "700";
 	
 	var params = {};
 	params.menu = "false";

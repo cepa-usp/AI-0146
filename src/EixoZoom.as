@@ -1,6 +1,7 @@
 package  
 {
 	import cepa.graph.rectangular.AxisX;
+	import fl.text.TLFTextField;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -24,7 +25,7 @@ package
 		private var delta:Number;
 		private var sprDelta:Sprite;
 		private var deltaNome:String;
-		public var deltaLabel:TextField;
+		public var deltaLabel:TLFTextField;
 		
 		public var leftBracket:LeftBracket;
 		public var rightBracket:RightBracket;
@@ -58,8 +59,8 @@ package
 			zoomOutBtn = new ZoomMinusBtn();
 			zoomInBtn = new ZoomPlusBtn();
 			
-			zoomInBtn.x = zoomInBtn.width / 2;
-			zoomInBtn.y = -40;
+			zoomInBtn.x = widthAxis - zoomInBtn.width / 2;
+			zoomInBtn.y = -50;
 			
 			zoomOutBtn.x = zoomInBtn.x + zoomOutBtn.width + 5;
 			zoomOutBtn.y = zoomInBtn.y;
@@ -157,16 +158,18 @@ package
 		private var showingName:Boolean = false;
 		private function showPtNumber(e:MouseEvent):void 
 		{
-			trace(e.target);
 			if(e.target is Ponto){
 				var pt:Ponto = Ponto(e.target);
 				pt.setLabel(pt.nomeBase + " = " + pt.eixoPt.toFixed(2));
 				showingName = true;
-			}else {
-				var txt:TextField = TextField(e.target);
+			}else if(e.target is TLFTextField){
+				//var txt:TextField = TextField(e.target);
+				var txt:TLFTextField = TLFTextField(e.target);
 				txt.width = 200;
 				txt.text = deltaNome + " = " + delta.toFixed(2);
 				txt.width = txt.textWidth + 5;
+			}else {
+				trace(e.target);
 			}
 		}
 		
@@ -176,8 +179,8 @@ package
 				showingName = false;
 				var pt:Ponto = Ponto(e.target);
 				pt.setLabel(pt.nomeBase);
-			}else {
-				var txt:TextField = TextField(e.target);
+			}else if(e.target is TLFTextField){
+				var txt:TLFTextField = TLFTextField(e.target);
 				txt.width = 200;
 				txt.text = deltaNome;
 				txt.width = txt.textWidth + 5;
@@ -250,13 +253,15 @@ package
 			addChild(sprDelta);
 			this.deltaNome = deltaNome;
 			
-			deltaLabel = new TextField();
-			deltaLabel.defaultTextFormat = new TextFormat("Times New Roman", 15, 0x7B5A15);
+			deltaLabel = new TLFTextField();
+			deltaLabel.defaultTextFormat = new TextFormat("Verdana", 15, 0x7B5A15);
+			//deltaLabel.embedFonts = true;
+			deltaLabel.mouseChildren = false;
 			deltaLabel.multiline = false;
 			deltaLabel.width = 200;
 			deltaLabel.text = deltaNome;
 			deltaLabel.width = deltaLabel.textWidth + 5;
-			deltaLabel.height = deltaLabel.textHeight;
+			deltaLabel.height = deltaLabel.textHeight + 4;
 			deltaLabel.selectable = false;
 			addChild(deltaLabel);
 			deltaLabel.addEventListener(MouseEvent.MOUSE_OVER, showPtNumber);
@@ -403,10 +408,10 @@ package
 		
 		private var widthArrow:Number = 10;
 		private var heightArrow:Number = 10;
+		public var yAdjust:Number = 30;
 			
-		private function drawDelta():void
+		public function drawDelta():void
 		{
-			var yAdjust:Number = 30;
 			var sprHalfWidth:Number;
 			
 			sprDelta.graphics.clear();
@@ -432,7 +437,8 @@ package
 			}
 			
 			deltaLabel.x = bracketPoint.x + sprHalfWidth - deltaLabel.width / 2;
-			deltaLabel.y = bracketPoint.y - yAdjust - deltaLabel.height - 5;
+			if (yAdjust > 0) deltaLabel.y = bracketPoint.y - yAdjust - deltaLabel.height - 5;
+			else deltaLabel.y = bracketPoint.y - 2 * yAdjust - deltaLabel.height - 5;
 		}
 		
 		private function drawleftArrow(ptX:Number, ptY:Number):void
@@ -559,7 +565,7 @@ package
 			}
 		}
 		
-		private function redefineAll():void 
+		public function redefineAll():void 
 		{
 			bracketPoint.x = axis.x2pixel(bracketPoint.eixoPt);
 			posicionaBrackets();
