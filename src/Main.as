@@ -2,11 +2,15 @@ package
 {
 	import BaseAssets.BaseMain;
 	import cepa.graph.rectangular.AxisX;
+	import com.eclecticdesignstudio.motion.Actuate;
+	import com.eclecticdesignstudio.motion.easing.Linear;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.external.ExternalInterface;
 	import flash.geom.Point;
+	import flash.text.TextFormat;
 	
 	/**
 	 * ...
@@ -30,6 +34,12 @@ package
 		private var indicadorLambda2:IndicadorF2;
 		private var indicadorX02:IndicadorF2;
 		
+		private var indicadorDownX0:IndicadorFDown;
+		private var indicadorDownLambda:IndicadorFDown;
+		
+		private var indicadorUpX0:IndicadorFUp;
+		private var indicadorUpLambda:IndicadorFUp;
+		
 		private var nomeFx0:NomeF;
 		private var nomeFlambda:NomeF;
 		
@@ -50,6 +60,77 @@ package
 			initModelParams();
 			addListerners();
 			addListenersTextoExplicativo();
+			setExternalInterface();
+			
+		}
+		
+		private function setExternalInterface():void 
+		{
+			if (ExternalInterface.available) {
+				ExternalInterface.addCallback("lockLambda", lockLambda);
+				ExternalInterface.addCallback("lockX0", lockX0);
+				ExternalInterface.addCallback("lockDelta", lockDelta);
+				
+				ExternalInterface.addCallback("lockL", lockL);
+				ExternalInterface.addCallback("lockEpsilon", lockEpsilon);
+				
+				ExternalInterface.addCallback("setLambda", setLambda);
+				ExternalInterface.addCallback("setX0", setX0);
+				ExternalInterface.addCallback("setDelta", setDelta);
+				
+				ExternalInterface.addCallback("setL", setL);
+				ExternalInterface.addCallback("setEpsilon", setEpsilon);
+			}
+		}
+		
+		private function setLambda(value:Number):void 
+		{
+			axisX1.setPontoPosition(Model.LAMBDA, value);
+		}
+		
+		private function setX0(value:Number):void 
+		{
+			axisX1.setPontoPosition(Model.XO, value);
+		}
+		
+		private function setDelta(value:Number):void 
+		{
+			axisX1.setDelta(value);
+		}
+		
+		private function setL(value:Number):void 
+		{
+			axisX2.setPontoPosition(Model.PT_L, value);
+		}
+		
+		private function setEpsilon(value:Number):void 
+		{
+			axisX2.setDelta(value);
+		}
+		
+		private function lockLambda(value:Boolean):void
+		{
+			axisX1.setLock(Model.LAMBDA, value);
+		}
+		
+		private function lockX0(value:Boolean):void
+		{
+			axisX1.setLock(Model.XO, value);
+		}
+		
+		private function lockDelta(value:Boolean):void
+		{
+			axisX1.lockDelta(value);
+		}
+		
+		private function lockL(value:Boolean):void
+		{
+			axisX2.setLock(Model.PT_L, value);
+		}
+		
+		private function lockEpsilon(value:Boolean):void
+		{
+			axisX2.lockDelta(value);
 		}
 		
 		private function initModelParams():void 
@@ -60,15 +141,16 @@ package
 			modelo.ptL = 5;
 			modelo.epsilon = 1;
 			
-			axisX1 = new EixoZoom(0, 5, 600);
-			axisX2 = new EixoZoom(0, 10, 600);
+			axisX1 = new EixoZoom(0, 5, 500);
+			axisX2 = new EixoZoom(0, 10, 500);
 			
+			//axisX1.rotation = -90;
 			addChild(axisX1);
-			axisX1.x = (stage.stageWidth - axisX1.width) / 2;
-			axisX1.y = 100;
+			axisX1.x = 100;
+			axisX1.y = 200;
 			addChild(axisX2);
-			axisX2.x = (stage.stageWidth - axisX2.width) / 2;
-			axisX2.y = 300;
+			axisX2.x = 100;
+			axisX2.y = 500;
 			
 			axisX1.createBrackets(Model.XO, modelo.x0, modelo.delta, Model.DELTA, true);
 			axisX1.adicionaPonto(Model.LAMBDA, modelo.lambda, false, true);
@@ -99,6 +181,22 @@ package
 			addChild(indicadorX02);
 			indicadorX02.visible = showAnswer;
 			
+			indicadorUpX0 = new IndicadorFUp();
+			addChild(indicadorUpX0);
+			indicadorUpX0.visible = false;
+			
+			indicadorUpLambda = new IndicadorFUp();
+			addChild(indicadorUpLambda);
+			indicadorUpLambda.visible = showAnswer;
+			
+			indicadorDownX0 = new IndicadorFDown();
+			addChild(indicadorDownX0);
+			indicadorDownX0.visible = false;
+			
+			indicadorDownLambda = new IndicadorFDown();
+			addChild(indicadorDownLambda);
+			indicadorDownLambda.visible = showAnswer;
+			
 			nomeFx0 = new NomeF();
 			addChild(nomeFx0);
 			nomeFx0.visible = showAnswer;
@@ -107,8 +205,7 @@ package
 			addChild(nomeFlambda);
 			nomeFlambda.visible = false;
 			
-			desenhaIndicadorXfX();
-			desenhaIndicadorLambdafLambda();
+			redesenhaIndicadores();
 			
 			textoExplicativo = new TextoExplicativo();
 			addChild(textoExplicativo);
@@ -187,14 +284,8 @@ package
 			
 			if (posX0.x < axisX1.x) {
 				if (posFx0.x < axisX1.x || posFx0.x > axisX1.x + axisX1.widthAxis) {
-					x0Fx0.graphics.clear();
-					nomeFx0.visible = false;
-					indicadorX0.visible = false;
-					indicadorX02.visible = false;
+					
 				}else {
-					x0Fx0.graphics.clear();
-					nomeFx0.visible = false;
-					indicadorX0.visible = false;
 					indicadorX02.x = posFx0.x;
 					indicadorX02.y = posFx0.y - distToPoint;
 					indicadorX02.scaleX = 1;
@@ -203,14 +294,8 @@ package
 				}
 			}else if (posX0.x > axisX1.x + axisX1.widthAxis) {
 				if (posFx0.x < axisX1.x || posFx0.x > axisX1.x + axisX1.widthAxis) {
-					x0Fx0.graphics.clear();
-					nomeFx0.visible = false;
-					indicadorX0.visible = false;
-					indicadorX02.visible = false;
+					
 				}else {
-					x0Fx0.graphics.clear();
-					nomeFx0.visible = false;
-					indicadorX0.visible = false;
 					indicadorX02.x = posFx0.x;
 					indicadorX02.y = posFx0.y - distToPoint;
 					indicadorX02.scaleX = -1;
@@ -219,26 +304,18 @@ package
 				}
 			}else {
 				if (posFx0.x < axisX1.x) {
-					x0Fx0.graphics.clear();
-					nomeFx0.visible = false;
-					indicadorX02.visible = false;
 					indicadorX0.x = posX0.x;
 					indicadorX0.y = posX0.y + distToPoint;
 					indicadorX0.scaleX = 1;
 					indicadorX0.nome.scaleX = 1;
 					indicadorX0.visible = showAnswer;
 				}else if (posFx0.x > axisX1.x + axisX1.widthAxis) {
-					x0Fx0.graphics.clear();
-					nomeFx0.visible = false;
-					indicadorX02.visible = false;
 					indicadorX0.x = posX0.x;
 					indicadorX0.y = posX0.y + distToPoint;
 					indicadorX0.scaleX = -1;
 					indicadorX0.nome.scaleX = -1;
 					indicadorX0.visible = showAnswer;
 				}else {
-					indicadorX0.visible = false;
-					indicadorX02.visible = false;
 					x0Fx0.visible = showAnswer;
 					x0Fx0.graphics.clear();
 					x0Fx0.graphics.beginFill(0x800000);
@@ -262,7 +339,7 @@ package
 		{
 			showAnswer = value;
 			axisX2.setVisible(Model.FXO, !showAnswer);
-			desenhaIndicadorXfX();
+			redesenhaIndicadores();
 		}
 		
 		private function desenhaIndicadorLambdafLambda():void 
@@ -273,14 +350,8 @@ package
 			
 			if (posLambda.x < axisX1.x) {
 				if (posFlambda.x < axisX1.x || posFlambda.x > axisX1.x + axisX1.widthAxis) {
-					lambdaFlambda.graphics.clear();
-					nomeFlambda.visible = false;
-					indicadorLambda.visible = false;
-					indicadorLambda2.visible = false;
+					
 				}else {
-					lambdaFlambda.graphics.clear();
-					nomeFlambda.visible = false;
-					indicadorLambda.visible = false;
 					indicadorLambda2.x = posFlambda.x;
 					indicadorLambda2.y = posFlambda.y - distToPoint;
 					indicadorLambda2.scaleX = 1;
@@ -289,14 +360,8 @@ package
 				}
 			}else if (posLambda.x > axisX1.x + axisX1.widthAxis) {
 				if (posFlambda.x < axisX1.x || posFlambda.x > axisX1.x + axisX1.widthAxis) {
-					lambdaFlambda.graphics.clear();
-					nomeFlambda.visible = false;
-					indicadorLambda.visible = false;
-					indicadorX02.visible = false;
+					
 				}else {
-					lambdaFlambda.graphics.clear();
-					nomeFlambda.visible = false;
-					indicadorLambda.visible = false;
 					indicadorLambda2.x = posFlambda.x;
 					indicadorLambda2.y = posFlambda.y - distToPoint;
 					indicadorLambda2.scaleX = -1;
@@ -305,26 +370,18 @@ package
 				}
 			}else {
 				if (posFlambda.x < axisX1.x) {
-					lambdaFlambda.graphics.clear();
-					nomeFlambda.visible = false;
-					indicadorLambda2.visible = false;
 					indicadorLambda.x = posLambda.x;
 					indicadorLambda.y = posLambda.y + distToPoint;
 					indicadorLambda.scaleX = 1;
 					indicadorLambda.nome.scaleX = 1;
 					indicadorLambda.visible = true;
 				}else if (posFlambda.x > axisX1.x + axisX1.widthAxis) {
-					lambdaFlambda.graphics.clear();
-					nomeFlambda.visible = false;
-					indicadorLambda2.visible = false;
 					indicadorLambda.x = posLambda.x;
 					indicadorLambda.y = posLambda.y + distToPoint;
 					indicadorLambda.scaleX = -1;
 					indicadorLambda.nome.scaleX = -1;
 					indicadorLambda.visible = true;
 				}else {
-					indicadorLambda.visible = false;
-					indicadorLambda2.visible = false;
 					lambdaFlambda.graphics.clear();
 					lambdaFlambda.graphics.beginFill(0x800000);
 					lambdaFlambda.graphics.drawCircle(posLambda.x, posLambda.y + distToPoint, 3);
@@ -343,12 +400,97 @@ package
 			}
 		}
 		
-		private function redesenhaIndicadores(e:ModelEvent):void 
+		private function redesenhaIndicadores(e:ModelEvent = null):void 
 		{
-			desenhaIndicadorXfX();
-			desenhaIndicadorLambdafLambda();
+			lambdaFlambda.graphics.clear();
+			nomeFlambda.visible = false;
+			indicadorLambda.visible = false;
+			indicadorLambda2.visible = false;
+			
+			indicadorDownX0.visible = false;
+			indicadorDownLambda.visible = showAnswer;
+			indicadorUpX0.visible = false;
+			indicadorUpLambda.visible = showAnswer;
+			
+			x0Fx0.graphics.clear();
+			x0Fx0.visible = showAnswer;
+			nomeFx0.visible = false;
+			indicadorX0.visible = false;
+			indicadorX02.visible = false;
+			
+			if(eixosParalelos){
+				desenhaIndicadorXfX();
+				desenhaIndicadorLambdafLambda();
+			}else {
+				desenhaIndicadorXfX2();
+				desenhaIndicadorLambdafLambda2();
+			}
 			axisX1.verificaPontosFora();
 			axisX2.verificaPontosFora();
+		}
+		
+		private function desenhaIndicadorXfX2():void 
+		{
+			var posX0:Point = new Point(axisX1.getBracketX() + axisX1.x, axisX1.y);
+			var posFx0:Point = new Point(axisX2.x, axisX2.y - axisX2.getPontoPosition(Model.FXO));
+			var distToPoint:Number = 20;
+			
+			x0Fx0.visible = showAnswer;
+			x0Fx0.graphics.clear();
+			x0Fx0.graphics.lineStyle(2, 0x800000);
+			
+			
+			if((posX0.x > axisX1.x) && (posX0.x < axisX1.x + axisX1.widthAxis)){
+				if (posFx0.y < axisX2.y && posFx0.y > axisX2.y - axisX2.widthAxis) {//Ambos dentro da tela.
+					x0Fx0.graphics.moveTo(posX0.x, posX0.y - distToPoint);
+					x0Fx0.graphics.lineTo(posX0.x, posFx0.y);
+					x0Fx0.graphics.beginFill(0x800000);
+					x0Fx0.graphics.drawCircle(posX0.x, posFx0.y, 2);
+					x0Fx0.graphics.endFill();
+					x0Fx0.graphics.lineTo(posFx0.x + distToPoint, posFx0.y);
+				}else {//f(x0) fora da tela.
+					indicadorUpX0.x = posX0.x;
+					indicadorUpX0.y = posX0.y - distToPoint;
+					indicadorUpX0.visible = showAnswer;
+				}
+			}else {
+				if (posFx0.y < axisX2.y && posFx0.y > axisX2.y - axisX2.widthAxis) {//Apenas f(x0) dentro da tela.
+					indicadorDownX0.x = posFx0.x + distToPoint;
+					indicadorDownX0.y = posFx0.y;
+					indicadorDownX0.visible = showAnswer;
+				}
+			}
+		}
+		
+		private function desenhaIndicadorLambdafLambda2():void 
+		{
+			var posLambda:Point = new Point(axisX1.getPontoPosition(Model.LAMBDA) + axisX1.x, axisX1.y);
+			var posFlambda:Point = new Point(axisX2.x, axisX2.y - axisX2.getPontoPosition(Model.FLAMBDA));
+			var distToPoint:Number = 20;
+			
+			lambdaFlambda.graphics.clear();
+			lambdaFlambda.graphics.lineStyle(2, 0x800000);
+			
+			if((posLambda.x > axisX1.x) && (posLambda.x < axisX1.x + axisX1.widthAxis)){
+				if (posFlambda.y < axisX2.y && posFlambda.y > axisX2.y - axisX2.widthAxis) {//Ambos dentro da tela.
+					lambdaFlambda.graphics.moveTo(posLambda.x, posLambda.y - distToPoint);
+					lambdaFlambda.graphics.lineTo(posLambda.x, posFlambda.y);
+					lambdaFlambda.graphics.beginFill(0x800000);
+					lambdaFlambda.graphics.drawCircle(posLambda.x, posFlambda.y, 2);
+					lambdaFlambda.graphics.endFill();
+					lambdaFlambda.graphics.lineTo(posFlambda.x + distToPoint, posFlambda.y);
+				}else {//f(lambda) fora da tela.
+					indicadorUpLambda.x = posLambda.x;
+					indicadorUpLambda.y = posLambda.y - distToPoint;
+					indicadorUpLambda.visible = true;
+				}
+			}else {
+				if (posFlambda.y < axisX2.y && posFlambda.y > axisX2.y - axisX2.widthAxis) {//Apenas f(lambda) dentro da tela.
+					indicadorDownLambda.x = posFlambda.x + distToPoint;
+					indicadorDownLambda.y = posFlambda.y;
+					indicadorDownLambda.visible = true;
+				}
+			}
 		}
 		
 		private function changeModelL(e:ModelEvent):void 
@@ -379,15 +521,13 @@ package
 		private function updateFlambda(e:ModelEvent):void 
 		{
 			axisX2.setPontoPosition(Model.FLAMBDA, modelo.fLambda);
-			desenhaIndicadorLambdafLambda();
-			axisX2.verificaPontosFora();
+			redesenhaIndicadores();
 		}
 		
 		private function updateFx0(e:ModelEvent):void 
 		{
 			axisX2.setPontoPosition(Model.FXO, modelo.fX0);
-			desenhaIndicadorXfX();
-			axisX2.verificaPontosFora();
+			redesenhaIndicadores();
 		}
 		
 		private function changeFunction(e:ModelEvent):void 
@@ -402,7 +542,42 @@ package
 		 */
 		override public function reset(e:MouseEvent = null):void
 		{
-			setShowAnswer(!showAnswer);
+			//setShowAnswer(!showAnswer);
+			changeAxisVisualization();
+		}
+		
+		private var eixosParalelos:Boolean = true;1
+		private function changeAxisVisualization():void 
+		{
+			indicadorLambda.visible = false;
+			indicadorLambda2.visible = false;
+			lambdaFlambda.graphics.clear();
+			nomeFlambda.visible = false;
+			
+			indicadorX0.visible = false;
+			indicadorX02.visible = false;
+			x0Fx0.graphics.clear();
+			nomeFx0.visible = false;
+			
+			indicadorDownLambda.visible = false;
+			indicadorDownX0.visible = false;
+			indicadorUpLambda.visible = false;
+			indicadorUpX0.visible = false;
+			
+			if (eixosParalelos) {
+				eixosParalelos = !eixosParalelos;
+				axisX1.yAdjust *= -1;
+				axisX1.drawDelta();
+				Actuate.tween(axisX1, 0.5, { x: 130, y: 600} ).ease(Linear.easeNone);
+				Actuate.tween(axisX2, 0.5, { x: 80, y:550, rotation: -90 } ).ease(Linear.easeNone).onComplete(redesenhaIndicadores);
+			}else {
+				eixosParalelos = !eixosParalelos;
+				axisX1.yAdjust *= -1;
+				axisX1.drawDelta();
+				Actuate.tween(axisX1, 0.5, { x: 100, y: 200} ).ease(Linear.easeNone);
+				Actuate.tween(axisX2, 0.5, { x: 100, y:500, rotation: 0 } ).ease(Linear.easeNone).onComplete(redesenhaIndicadores);
+			}
+			
 		}
 		
 	}
