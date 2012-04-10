@@ -64,7 +64,7 @@ function fetch () {
   if (session.standalone) {
   
       var stream = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (stream != null) ans = JSON.parse(stream);
+      //if (stream != null) ans = JSON.parse(stream);
   }
   // Se estiver conectado a um LMS, usa SCORM
   else {

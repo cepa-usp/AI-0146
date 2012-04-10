@@ -24,6 +24,7 @@ function preFetchHook () {
 	N_FRAMES = 10;
   
 	// Botão "avançar"
+	$("#step-backward").button().click(stepBackwardOrNot);
 	$("#step-forward").button().click(stepForwardOrFinish);
 
 	// Tecla "enter" (também avança)
@@ -223,7 +224,7 @@ function finish () {
 	
 	if (!memento.completed) {
 		memento.completed = true;
-		memento.score = Math.max(0, Math.min(Math.ceil(100 * memento.count / memento.answers.length), 100));
+		//memento.score = Math.max(0, Math.min(Math.ceil(100 * memento.count / memento.answers.length), 100));
 		commit(memento);
 	}
 }
@@ -234,6 +235,10 @@ function finish () {
 function stepForwardOrFinish () {
 	if (memento.frame < N_FRAMES) stepForward();
 	else finish();
+}
+
+function stepBackwardOrNot () {
+	if (memento.frame > 0) stepBackward();
 }
 
 // Checks if given selector (type input) is a valid number. If not, resets field.
