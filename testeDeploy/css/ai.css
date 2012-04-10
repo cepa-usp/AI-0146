@@ -1,0 +1,170 @@
+body {
+	width:1020px;
+	background: #FFF;
+}
+/* Mensagem informando que a atividade já foi feita */
+.completion-message {
+	font-size: 20px;
+	color: #46882E;
+}
+
+/* Elementos desta classe são destacados dos demais, para indicar o texto novo. */
+.current-frame {
+	border-left: 4px #46882E solid;
+	padding: 10px;
+}
+
+/* Caixas de diálogo */
+.dialog {
+	display: none;
+}
+
+/* Expressões matemáticas com linha própria */
+.display-eq {
+	margin-left: 10px;
+	display: inline;
+}
+
+/* Textos serão enfatizados com negrito */
+em {
+	font-style: normal;
+	font-weight: bold;
+}
+
+/* Número de equações matemáticas (display-eq) */
+.eq-number {
+	display: inline;
+	float: right;
+	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+	font-size: 13pt;
+}
+
+/* Seções com informações extras */
+.extra {
+	margin: 0px;
+	margin-right: 20px;
+	margin-left: 30px;
+	padding: 0px;
+	padding-left: 4px;
+}
+
+/* Cabeçalho de uma seção "extra" ("saiba mais") */
+.extra .head {
+	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+	font-size: 13pt;
+	font-weight: bold;
+	color: white;
+	background-color: #46882E;
+	padding: 2px;
+}
+
+/* Canteúdo de uma seção "extra" ("saiba mais") */
+.extra .content {
+	border: 2px #46882E solid;
+	padding-bottom: 0px;
+}
+
+/* Palavras estrangeiras */
+.foreign {
+	font-style: italic;
+}
+
+/* Elementos da classe "frame" encapsulam as tags de um mesmo quadro */
+.frame {
+	margin: 0px;
+	margin-right: 20px;
+	padding: 0px;
+	padding-left: 4px;
+}
+
+/* Título da atividade */
+h1 {
+	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+	margin-left: 15px;
+}
+
+/* Imagens */
+img {
+	vertical-align: middle;
+}
+
+.init-message {
+	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+	font-size: 13pt;
+	margin-left: 15px;
+}
+
+/* Mensagem de falha na configuração da AI */
+#init-failure-message {
+	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+	font-size: 13pt;
+	font-weight: bold;
+	color: #D90000;
+	display: none;
+	margin-left: 15px;
+}
+
+/* Licença */
+.license {
+	font-family: Aria, Helvetica, Sans-serif;
+	font-size: 10px;
+	padding: 5px;
+	display: none;
+}
+
+/* Quebra de linha entre divs */
+.line-break {
+	clear: both;
+	padding: 5px;
+}
+
+/* Mensagem de Javascript desabilitado */
+#noscript-message {
+	margin-left: 15px;
+}
+
+/* Parágrafos */
+p {
+	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+	font-size: 13pt;
+	color: black;
+	padding: 0px;
+	padding-bottom: 1px;
+	margin: 5px;
+	margin-bottom: 4px;
+	margin-left: 10px;
+}
+
+/* Citações e afins */
+.quotation {
+	font-style: italic;
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+/* Texto apresentado quando o usuário ERRA uma resposta */
+.right-answer {
+	font-weight: bold;
+	color: #46882E;
+}
+
+/* Todos os elementos começam invisíveis */
+.start-invisible {
+	display: none;
+}
+
+/* Texto apresentado quando o usuário ACERTA uma resposta */
+.wrong-answer {
+	font-weight: bold;
+	color: #D90000;
+}
+
+#textArea{
+	width: 400px;
+	float: left;
+}
+
+#ai-container{
+	width:600px;
+	float:right;
+}
