@@ -6,15 +6,137 @@
 </head>
 <body>
 	<div id="conteudo">
-		<div id="texto1" class="texto">
-			<p>nesta atividade interativa veremos, passo-a-passo, o conceito de limite de uma função de uma variável. 
-				Você pode refazer este tutorial quantas vezes quiser. <br /><b>inicial</b></p>
-			<p>O valor f em x = x0 é simplesmente f (x0). Mas e se x for um número muito próximo de x0, embora
-				diferente? Intuitivamente, podemos responder: “ f (x) será muito próximo de f (x0)”. Este realmente é
-				o caso na maioria das vezes, mas nem sempre. Veja esta equação:</p>
+		<div id="t1" class="texto">
+			<p>Nesta atividade interativa veremos, passo-a-passo, o conceito de limite de uma função de uma variável. 
+			Você pode refazer este tutorial quantas vezes quiser. <br /></p>
+			<p>O valor $f$ em $x = x_0$ é simplesmente $f(x_0)$. Mas e se $x$ for um número muito \emph{próximo} de $x_0$, embora diferente? Intuitivamente, podemos responder: ``$f(x)$ será muito próximo de $f(x_0)$''. Este realmente é o caso \emph{na maioria das vezes}, mas nem sempre. Veja esta equação:<br><br>
+				\begin{equation}\label{eq:limite}
+				\lim_{\scriptsize x  \to x_0} f(x) = L.
+				\end{equation}<br><br></p>
+			<p>Ela deve ser lida assim: o limite de $f$ quando $x$ tende a $x_0$ ($x \to x_0$) é igual a $L$. Ou seja, se $x$ for muito \emph{próximo} de $x_0$, $f(x)$ será \emph{igual} a $L$, um número que não conhecemos a priori. $L$ é dito ``o limite'' de $f$ em $x_0$.<br>
+
+			Dois detalhes podem ter passado despercebidos: primeiro, $L$ não é necessariamente igual a $f(x_0)$, embora isto aconteça com frequência (veremos que isto tem a ver com a \emph{continuidade} de $f$). Segundo, dizer que $x$ está \emph{próximo} de $x_0$ tem um significado rigoso. Na verdade, o correto é dizer que $x$ pertence à vizinhança de $x_0$.<br>
+
+			Veja a figura. Você pode arrastar $x$, mas há uma restrição: ele não pode ir muito longe de $x_0$. Especificamente, $|x - x_0| < \delta$. O conjunto dos valores que $x$ pode assumir, de $x_0 - \delta$ até $x_0 + \delta$, é a vizinhança de $x_0$. $\delta$ pode ser qualquer número positivo (desde que a vizinhança permaneça no domínio de $f$, uma preocupação que não temos aqui, pois o domínio de $f$ é $\mathbb{R}$). Certifique-se de que você entendeu isso antes de continuar.<br>
+			</p>
 		</div>
-		<div id="outrotexto" class="texto">Segundo teste</div>
-		<div id="outrotexto2" class="texto">Segssdsdsdsundo <b>teste</b></div>
+		<div id="t2" class="texto">
+			<p>Outro detalhe inerente à equação~\ref{eq:limite} é que $f$ é calculada sempre em $x$, nunca em $x_0$, e resulta no número $f(x)$, também exibido na figura. Assim, à medida que você arrasta $x$ na vizinhança de $x_0$, $f(x)$ varre um intervalo corresponde na imagem de $f$ (faça isso agora).</p>		
+		</div>
+		<div id="t3" class="texto">
+			<p>Agora, experimente reduzir $\delta$. Note que, com isso, o intervalo de variação de $f(x)$ também diminui. Assim, se fizermos isto indefinidamente, de modo que $x$ e $x_0$ sejam números cada vez mais próximos ($\delta \to 0$), podemos esperar que $f(x)$ também aproxime-se mais e mais de um número qualquer $L$. Este é o limite de $f$ em $x_0$.<br>
+
+			Mas isto só é verdade por que a função usada aqui é contínua (você saberá qual é ela em breve). O problema é que, embora possamos sempre fazer $\delta \to 0$, não podemos garantir que a variação em $f(x)$ também tenda a zero. Nós veremos isto depois.<br>
+
+			No momento, a questão a ser respondida é ''que critério podemos usar para dizer que $L$ é de fato o número que procuramos?''. A resposta para esta pergunta levou alguns milhares de anos para ser respondida, mas no escopo desta atividade podemos escrevê-la assim:<br><br>
+
+			\begin{quotation}
+			Se \textbf{eu} escolher um número $\varepsilon$ arbitrariamente pequeno, \textbf{você} poderá encontrar um $\delta$ tal que, para qualquer $x$ na vizinhança de $x_0$, $f(x)$ permanece tão próximo de $L$ que $|L - f(x)| < \varepsilon$.
+			\end{quotation}</p>
+		</div>
+		<div id="t4" class="texto">
+			<p>Nós vamos agora brincar de gato e rato: eu vou escolher $\varepsilon$ e você vai ajustar $L$ e $\delta$, na figura, de modo a satisfazer o critério acima. Em seguida eu vou reduzir $\varepsilon$ e você será obrigado a ajustar novamente $L$ e $\delta$... Note que a inequação $|L - f(x)| < \varepsilon$ é satisfeita quando $f(x)$ fica sempre entre os colchetes ao redor de $L$, na figura.<br><br>
+
+			\begin{ct}
+			no \foreign{applet}, faça $x_0 = 2$ e $\varepsilon = 3$. A partir daqui e até que o tutorial esteja concluído, o usuário não poderá modificar $x_0$ nem $\varepsilon$. Por outro lado, ele poderá mexer em $L$ e $\delta$.
+			\end{ct}<br><br>
+
+			Calcularemos o limite de $f$ em $x_0 = 2$. Para começar, eu escolhi $\varepsilon = 3$. Agora é a sua vez: ajuste $L = 20$ e $\delta = 1$. Na verdade esses valores iniciais de $L$ e $\delta$ são totalmente arbitrários, mas para simplificar a sua interação com a atividade, ajuste-os conforme solicitado. No final deste tutorial você poderá explorar livremente a figura.</p>
+		</div>
+		<div id="t5" class="texto">
+			<p>\begin{ct}
+			Faça $L = 20$ e $\delta = 1$ no \foreign{applet} se os valores ajustados pelo usuário diferirem de mais de $10\%$ desses valores.
+			\end{ct}<br><br>
+
+			Pela definição acima, se $L = 20$ for o limite procurado, então podemos arrastar $x$ livremente e sempre obteremos $f(x)$ entre os colchetes ao redor de $L$. Veja se isto acontece.</p>
+		</div>
+		<div id="t6" class="texto">
+			<p>Como você pôde perceber, em nenhum momento $f(x)$ permaneceu entre os colchetes ao redor de $L$. Ou seja, $|L - f(x)| > \varepsilon$ e, por conseguinte, $L = 20$ \textbf{não} é o valor que procuramos.<br><br>
+
+			Na verdade, $L$ deve estar mais próximo de $f(x)$. Escolha um $L$ mais próximo de $f(x)$. Arraste $x$ por toda a vizinhança de $x_0$ e observe o movimento de $f(x)$ para tomar a sua decisão.</p>
+		</div>
+		<div id="t7" class="texto">
+			<p>\condicional{Usuário escolheu $3 \le L \le 7$}{Muito bom! Parece que você entendeu a ideia.} Eu ajustei $L = 6$ apenas para simplificar, mas poderíamos prosseguir com o valor que você escolheu. Qual é o comportamento de $f(x)$ agora?</p>
+		</div>
+		<div id="t8" class="texto">
+			<p>Desta vez $f(x)$ hora está dentro do intervalo, hora não. O problema é que a vizinhança de $x_0$ está muito grande. Mas você pode corrigir isso: faça $\delta \approx 0,2$ (é só em $\varepsilon$ que você não pode mexer).</p>
+		</div>
+		<div id="t9" class="texto">
+			<p>\begin{ct}
+			faça $\delta = 0,2$ no \foreign{applet} independentemente do ajuste do usuário.
+			\end{ct}<br><br>
+
+			Agora sim: $f(x)$ está sempre contido no intervalo $]L - \varepsilon, L + \varepsilon[$, independentemente de qual seja o $x$ na vizinhança de $x_0$. </p>
+		</div>
+		<div id="t10" class="texto">
+			<p>\begin{ct}
+			faça $\varepsilon = 1$ no \foreign{applet}.
+			\end{ct}
+		   
+			No entanto, ainda pela definição de limite, \textbf{eu} posso reduzir $\varepsilon$. Escolhi $\varepsilon = 1$, diminuindo assim a extensão do intervalo ao redor de $L$, e novamente colocando $f(x)$ fora dele. Verifique.</p>
+		</div>
+		<div id="t11" class="texto">
+			<p>O que devemos fazer para corrigir isto é, novamente, aproximar $L$ de $f(x)$. Faça $L = 5$ e verifique o comportamento de $f(x)$.</p>
+		</div>
+		<div id="t12" class="texto">
+			<p>\begin{ct}
+			faça $\varepsilon = 0,5$ no \foreign{applet}.
+			\end{ct}<br><br>
+
+			Parece que $f(x)$ voltou a manter-se entre os colchetes. Mas agora eu reduzi ainda mais $\varepsilon$, para $0,5$. Reduza $\delta$ mais um pouco.</p>
+		</div>
+		<div id="i1" class="texto">
+			<p>\begin{ct}
+			se o usuário não tiver reduzido $\delta$, faça $\delta = 0,05$ no \foreign{applet}.
+			\end{ct}<br><br>
+
+			Nós podemos continuar assim indefinidamente, mas creio que você entendeu a ideia e podemos parar por aqui. Agora responda: qual é o valor de $L$ que você encontrou, isto é, qual é o limite de $f$ em $x_0 = 2$?<br><br>
+			\begin{equation*}
+			\lim_{x \to x_0} f(x) = L = \text{\answerfield \proceed}
+			\end{equation*}<br><br>
+
+			\condicional{Usuário errou}{A resposta correta é $L = 5$. Se você não chegou a este resultado (aproximadamente), refaça os passos acima antes de prosseguir.}</p>
+		</div>
+		<div id="t14" class="texto">
+			<p>Nos passos acima, $f(x) = 2x + 1$. Note que $L = f(2)$. Em palavras, o limite de $f$ em $x_0 = 2$ é simplesmente $f(x_0)$. Quando isto acontece, dizemos que \emph{$f$ é contínua em $x_0$}. Por outro lado, quando isto acontece para \emph{todos} os pontos do domínio de $f$, isto é, não só para $x_0 = 2$, dizemos que \emph{$f$ é contínua} (em todos os pontos).</p>
+		</div>
+		<div id="t15" class="texto">
+			<p>\begin{ct}
+			no \foreign{applet}, trocar a função para:<br>
+			\begin{equation*}
+				f(x) = \begin{cases}<br>
+				2x & x < 3 \\<br>
+				2x + 1 & x \ge 3<br>
+				\end{cases}.<br>
+			\end{equation*}<br><br>
+
+			Além disso, fazer $x_0 = 3$, $\delta = 1$, $\varepsilon = 3$ e $\text{zoom} = 1$.<br>
+			\end{ct}<br><br>
+
+			Acontece que este nem sempre é o caso. Na figura acima $f$ foi alterada para<br>
+			\begin{equation*}<br>
+			f(x) = \begin{cases}<br>
+				2x & x < 3 \\<br>
+				2x + 1 & x \ge 3<br>
+			\end{cases}<br>
+			\end{equation*}<br><br> 
+
+			Esta função \textbf{não} é contínua.<br><br>
+
+			Agora é com você: todos os elementos da figura podem ser alterados ($x_0$, $x$, $\delta$, $\varepsilon$ e $L$). Reproduza os passos que fizemos há pouco com esta função e responda: é<br>possível encontrar um $L$ quando $x_0 = 3$? Ou seja, $f$ tem limite em $x_0 = 3$?</p>
+		</div>
+		<div id="t16" class="texto">
+			<p>Agora que você já passou por tudo isso, leia a definição formal de limites:<br><br>
+			\begin{quotation}
+			\begin{equation*}
+				\lim_{x \to x_0} f(x) = L
+			\end{equation*}<br><br>
+			$L$ é o limite da função $f:\mathbb{R} \to \mathbb{R}$ em $x = x_0$ se, qualquer que seja $\varepsilon > 0$, é possível encontrar um $\delta > 0$ tal que $|L - f(x)| < \varepsilon$ para todo $x$ que satisfaz $|x - x_0| < \delta$.<br>
+			\end{quotation}</p>
+		</div>		
+		<div id="t17" class="texto">
+			<p>Lembre-se: você pode executar este tutorial quantas vezes quiser. Basta pressionar o botão ''recomeçar''.<br></p>
+		</div>		
 	</div>
 </body>
 </html>

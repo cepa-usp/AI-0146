@@ -1,10 +1,10 @@
 body {
-	width:1020px;
+	width:1024px;
 	background: #FFF;
 }
 /* Mensagem informando que a atividade já foi feita */
 .completion-message {
-	font-size: 20px;
+	font-size: 18px;
 	color: #46882E;
 }
 
@@ -50,8 +50,8 @@ em {
 
 /* Cabeçalho de uma seção "extra" ("saiba mais") */
 .extra .head {
-	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-	font-size: 13pt;
+	font-family: 'Verdana', 'Helvetica', Palatino, serif;
+	font-size: 11px;
 	font-weight: bold;
 	color: white;
 	background-color: #46882E;
@@ -79,8 +79,8 @@ em {
 
 /* Título da atividade */
 h1 {
-	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-	margin-left: 15px;
+	font-family: 'Verdana', 'Helvetica', Palatino, serif;
+	margin-left: 11px;
 }
 
 /* Imagens */
@@ -89,8 +89,8 @@ img {
 }
 
 .init-message {
-	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-	font-size: 13pt;
+	font-family: 'Verdana', 'Helvetica', Palatino, serif;
+	font-size: 12px;
 	margin-left: 15px;
 }
 
