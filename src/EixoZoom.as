@@ -639,6 +639,11 @@ package
 			delta = value;
 			redefineAll();
 		}
+		
+		public function getDelta():Number
+		{
+			return delta;
+		}
 	}
 
 }

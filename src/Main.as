@@ -75,12 +75,24 @@ package
 				ExternalInterface.addCallback("lockEpsilon", lockEpsilon);
 				
 				ExternalInterface.addCallback("setLambda", setLambda);
+				ExternalInterface.addCallback("getLambda", getLambda);
 				ExternalInterface.addCallback("setX0", setX0);
+				ExternalInterface.addCallback("getX0", getX0);
 				ExternalInterface.addCallback("setDelta", setDelta);
+				ExternalInterface.addCallback("getDelta", getDelta);
 				
 				ExternalInterface.addCallback("setL", setL);
+				ExternalInterface.addCallback("getL", getL);
 				ExternalInterface.addCallback("setEpsilon", setEpsilon);
+				ExternalInterface.addCallback("getEpsilon", getEpsilon);
+				
+				ExternalInterface.addCallback("doNothing", doNothing);
 			}
+		}
+		
+		public function doNothing():void
+		{
+			
 		}
 		
 		private function setLambda(value:Number):void 
@@ -88,9 +100,19 @@ package
 			axisX1.setPontoPosition(Model.LAMBDA, value);
 		}
 		
+		private function getLambda():Number
+		{
+			return Ponto(axisX1.getProperty(Model.LAMBDA)).eixoPt;
+		}
+		
 		private function setX0(value:Number):void 
 		{
 			axisX1.setPontoPosition(Model.XO, value);
+		}
+		
+		private function getX0():Number
+		{
+			return Ponto(axisX1.getProperty(Model.XO)).eixoPt;
 		}
 		
 		private function setDelta(value:Number):void 
@@ -98,14 +120,29 @@ package
 			axisX1.setDelta(value);
 		}
 		
+		private function getDelta():Number
+		{
+			return axisX1.getDelta();
+		}
+		
 		private function setL(value:Number):void 
 		{
 			axisX2.setPontoPosition(Model.PT_L, value);
 		}
 		
+		private function getL():Number
+		{
+			return Ponto(axisX2.getProperty(Model.PT_L)).eixoPt;
+		}
+		
 		private function setEpsilon(value:Number):void 
 		{
 			axisX2.setDelta(value);
+		}
+		
+		private function getEpsilon():Number 
+		{
+			return axisX2.getDelta();
 		}
 		
 		private function lockLambda(value:Boolean):void

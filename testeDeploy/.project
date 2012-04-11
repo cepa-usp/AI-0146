@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>testedep</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.wst.jsdt.core.javascriptValidator</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>js/stepHooks.js</name>
+			<type>1</type>
+			<location>C:/wamp/www/testeDeploy/js/stepHooks.js</location>
+		</link>
+		<link>
+			<name>js/textos.js</name>
+			<type>1</type>
+			<location>C:/wamp/www/testeDeploy/js/textos.js</location>
+		</link>
+	</linkedResources>
+</projectDescription>
