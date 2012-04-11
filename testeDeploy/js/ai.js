@@ -9,7 +9,7 @@ var memento = {}; // Dados da AI
 var session = {}; // Dados da sessão SCORM
 var t1;
 var debug = true;
-
+var content = {};
 
 $(document).ready(init); // Inicia a AI.
 $(window).unload(uninit); // Encerra a AI.
@@ -18,10 +18,42 @@ $(window).unload(uninit); // Encerra a AI.
  * Inicia a Atividade Interativa (AI)
  */
 function init () {
-  preFetchHook();
-  memento = fetch();
-  postFetchHook(memento);
+	loadContent();
+
+  
 }
+
+function loadContent(){
+	$('#total').load("content.html #conteudo", onContentLoaded);	
+}
+function onContentLoaded(){
+	content = $('#total').find(".texto");
+	$('#total').remove();
+
+	preFetchHook();
+	memento = fetch();
+	postFetchHook(memento);	
+}
+
+function callEnterFrame(contentElement){
+	var funcname = contentElement + "_enterFrame()";
+	try {
+		var ret = eval(funcname);	
+	} catch(e){
+		
+	}
+	
+	
+}
+function callLeaveFrame(contentElement){
+	var funcname = contentElement + "_leaveFrame()";
+	try {
+		var ret = eval(funcname);	
+	} catch(e){
+		
+	}	
+}
+
 
 /*
  * Encerra a Atividade Interativa (AI)
@@ -138,7 +170,7 @@ function commit (data) {
 // Tenta acessar os métodos expostos do filme Flash repetidas vezes, até funcionar ou até o limite de MAX_INIT_TRIES
 function checkCallbacks () {
 	var t2 = new Date().getTime();
-
+	
 	try {
 		movie.doNothing();
 		message("Callbacks disponíveis após " + ((t2 - t1)/ 1000) + " segundos.");

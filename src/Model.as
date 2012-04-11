@@ -44,9 +44,9 @@ package
 		{
 			//----------------- Funções continuas ------------------------//
 			funcoesContinuas.push(function(x:Number):Number {
-										return x * x;
+										return 2 * x + 1;
 									});
-			funcoesContinuas.push(function(x:Number):Number {
+			/*funcoesContinuas.push(function(x:Number):Number {
 										return x * 2;
 									});
 			funcoesContinuas.push(function(x:Number):Number {
@@ -81,13 +81,16 @@ package
 									});
 			funcoesDescontinuas.push(function(x:Number):Number {
 										return x * x;
-									});
+									});*/
 		}
 		
 		public function sortCurrentFunction():void 
 		{
-			var sortN:int;
-			if (Math.random() > 0.5) {//Função contínua
+			var sortN:int = 0;
+			currentFunctionType = "continua";
+			currentFunction = funcoesContinuas[0];
+			
+			/*if (Math.random() > 0.5) {//Função contínua
 				if (currentFunctionType == "continua") {
 					sortN = Math.floor(Math.random() * funcoesContinuas.length);
 					while (sortN == currentSortN) {
@@ -111,7 +114,7 @@ package
 					currentSortN = Math.floor(Math.random() * funcoesDescontinuas.length);
 				}
 				currentFunction = funcoesDescontinuas[currentSortN];
-			}
+			}*/
 			
 			var evt:ModelEvent = new ModelEvent(ModelEvent.CHANGE_FUNCTION, true);
 			evtDispatcher.dispatchEvent(evt);

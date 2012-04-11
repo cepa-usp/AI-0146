@@ -97,7 +97,6 @@ function preSetFrameHook (targetFrame) {
  * After set-frame hook.
  */
 function postSetFrameHook (targetFrame) {
-
 	memento.frame = targetFrame;
 	
 	// Configura os botões "avançar" e "recomeçar"
@@ -105,51 +104,7 @@ function postSetFrameHook (targetFrame) {
 	$("#reset").button({disabled: !allow_reset});
 	$("#step-forward").button({disabled: (memento.frame == N_FRAMES && memento.completed)});
   
-	// Configuração específica de cada quadro
-	switch (frame) {
-		// 0 --> 1
-		case  1:
-		  break;
-		  
-		// 1 --> 2
-		case  2:
-		  break;
-		  
-		// 2 --> 3
-		case  3:
-		  break;
-		  
-		// 3 --> 4
-		case  4:
-		  break;
-
-		// 4 --> 5
-		case  5:
-			break;
-		  
-		// 5 --> 6
-		case  6:
-		  break;
-		  
-		// 6 --> 7
-		case  7:
-		  break;
-
-		// 7 --> 8
-		case  8:
-		  break;
-		  
-		// 8 --> 9
-		case  9:
-		  break;
-		  
-		// 9 --> 10
-		case 10:
-		  break;
-		  
-		default:
-		  break;
-	}
+	
 }
 
 /**

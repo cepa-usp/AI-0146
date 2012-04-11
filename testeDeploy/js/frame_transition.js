@@ -1,5 +1,6 @@
 // Current frame
 var frame = 0;
+var content;
 
 // Amount of frames
 var N_FRAMES = 0;
@@ -8,22 +9,11 @@ var N_FRAMES = 0;
  * Step frame forward
  */
 function stepForward () {
-
 	var next_frame = frame + 1;
-
 	if (next_frame <= N_FRAMES) {
 		if (preStepForwardHook()) {
-
 			message("Transição " + frame + " -> " + next_frame);
-			
-			document.getElementById("textArea").innerHTML = textos[next_frame];
-			
-			//$("#frame-" + frame).removeClass("current-frame");
-			//$("#frame-" + next_frame).show().addClass("current-frame");
-
-			frame = next_frame;
-
-			postStepForwardHook();
+			setFrame(next_frame);
 		}
 		else {
 			refusedStepForwardHook();
@@ -35,22 +25,11 @@ function stepForward () {
  * Step frame backward
  */
 function stepBackward () {
-
-	var next_frame = frame - 1;
-  
+	var next_frame = frame - 1;  
 	if (next_frame >= 0) {
 		if (preStepBackwardHook()) {
-
-			message("Transição " + frame + " -> " + next_frame);
-			
-			document.getElementById("textArea").innerHTML = textos[next_frame];
-
-			//$("#frame-" + frame).hide().removeClass("current-frame");
-			//$("#frame-" + next_frame).addClass("current-frame");
-
-			frame = next_frame;
-
-			postStepBackwardHook();
+			message("Transição " + frame + " -> " + next_frame);			
+			setFrame(next_frame);
 		}
 		else {
 			refusedStepBackwardHook();
@@ -61,23 +40,24 @@ function stepBackward () {
 /*
  * Sets current frame to <targetFrame>
  */
-function setFrame (targetFrame) {
-  
+function setFrame(targetFrame) {
+ 
 	if (!isNaN(targetFrame) && targetFrame >= 0 && targetFrame <= N_FRAMES) { 
 		if (preSetFrameHook(targetFrame)) {
-
-			$(".frame").removeClass("current-frame");
-			$("#frame-" + targetFrame).addClass("current-frame");
-
-			// TODO: não gostei desta solução. Há uma iteração para cada frame, e para cada uma delas há uma função rodando (map) sobre um vetor (result) de um elemento.
-			for (var i = 0; i <= N_FRAMES; i++) {
-				var result = $("#frame-" + i);
-				$.map(result, (i > targetFrame ? hide : show));
+			if(frame!=targetFrame){
+				var oldContentElement = content[frame].id;
+				callLeaveFrame(oldContentElement);
 			}
-
-			frame = targetFrame;
 			
+			var contentElement = content[targetFrame].id;
+			callEnterFrame(contentElement);
+			
+			var htmlContent = $(content[targetFrame]).html();
+			$('#textArea').html(htmlContent);
+
+			frame = targetFrame;			
 			postSetFrameHook(targetFrame);
+			
 		}
 		else {
 			refusedSetFrameHook(targetFrame);
