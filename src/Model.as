@@ -9,14 +9,14 @@ package
 	 */
 	public class Model
 	{
-		public static const LAMBDA:String = "λ";//λ
+		public static const LAMBDA:String = "x";//λ
 		public static const XO:String = "x<sub>0</sub>";
 		public static const DELTA:String = "δ";//∂ ∂ ∆ δ 
 		
 		public static const PT_L:String = "L";
 		public static const EPSILON:String = "ε";//ε Ε
 		public static const FXO:String = "ƒ(x<sub>0</sub>)"; //ƒ
-		public static const FLAMBDA:String = "ƒ(λ)";
+		public static const FLAMBDA:String = "ƒ(x)";
 		
 		private var _lambda:Number;
 		private var _x0:Number;

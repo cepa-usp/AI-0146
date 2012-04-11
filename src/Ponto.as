@@ -17,6 +17,7 @@ package
 		public var nomeBase:String;
 		//private var label:TextField;
 		private var label:TLFTextField;
+		private var labelSub:TLFTextField;
 		
 		public function Ponto() 
 		{
@@ -36,7 +37,7 @@ package
 			
 			label = new TLFTextField();
 			label.name = "tlfText";
-			label.defaultTextFormat = new TextFormat("Verdana", 15, 0x7B5A15);
+			label.defaultTextFormat = new TextFormat("Verdana", 12, 0x000000);
 			label.multiline = false;
 			label.selectable = false;
 			label.width = 5;
@@ -48,19 +49,50 @@ package
 		
 		override public function set name(value:String):void
 		{
-			label.width = 200;
-			//label.text = value;
-			label.htmlText = value;
-			label.width = label.textWidth + 5;
-			super.name = value;
+			if (value == Model.XO) {
+				label.width = 200;
+				//label.text = value;
+				label.htmlText = "x";
+				label.width = label.textWidth + 5;
+				super.name = value;
+				
+				labelSub = new TLFTextField();
+				labelSub.name = "tlfTextSub";
+				labelSub.defaultTextFormat = new TextFormat("Verdana", 8, 0x000000);
+				labelSub.multiline = false;
+				labelSub.selectable = false;
+				labelSub.height = 20;
+				labelSub.width = 200;
+				labelSub.htmlText = "0";
+				labelSub.width = labelSub.textWidth + 5;
+				labelSub.x = 7 + label.textWidth;
+				labelSub.y = -20;
+				addChild(labelSub);
+				
+			}else{
+				label.width = 200;
+				//label.text = value;
+				label.htmlText = value;
+				label.width = label.textWidth + 5;
+				super.name = value;
+			}
 		}
 		
 		public function setLabel(value:String):void
 		{
-			label.width = 200;
-			//label.text = value;
-			label.htmlText = value;
-			label.width = label.textWidth + 5;
+			if (super.name == Model.XO) {
+				label.width = 200;
+				//label.text = value;
+				var arr:Array = value.split("=");
+				if (arr.length > 1) label.htmlText = "x  =" + value.split("=")[1];
+				else label.htmlText = "x";
+				label.width = label.textWidth + 5;
+			}else{
+				label.width = 200;
+				//label.text = value;
+				label.htmlText = value;
+				label.width = label.textWidth + 5;
+			}
 		}
 		
 	}

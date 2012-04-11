@@ -46,6 +46,8 @@ package
 		private var textoExplicativo:TextoExplicativo;
 		private var showAnswer:Boolean = false;
 		
+		private var visualizationBtn:TrocarVisao;
+		
 		public function Main():void 
 		{
 			if (stage) init();
@@ -178,8 +180,8 @@ package
 			modelo.ptL = 5;
 			modelo.epsilon = 1;
 			
-			axisX1 = new EixoZoom(0, 5, 500);
-			axisX2 = new EixoZoom(0, 10, 500);
+			axisX1 = new EixoZoom(0, 5, 500, "Eixo x");
+			axisX2 = new EixoZoom(0, 10, 500, "Eixo y");
 			
 			//axisX1.rotation = -90;
 			addChild(axisX1);
@@ -266,6 +268,20 @@ package
 			
 			axisX1.addEventListener(ModelEvent.CHANGE_ZOOM, redesenhaIndicadores);
 			axisX2.addEventListener(ModelEvent.CHANGE_ZOOM, redesenhaIndicadores);
+			
+			visualizationBtn = new TrocarVisao();
+			visualizationBtn.x = stage.stageWidth - visualizationBtn.width / 2 - 10;
+			visualizationBtn.y = 620;
+			visualizationBtn.buttonMode = true;
+			addChild(visualizationBtn);
+			visualizationBtn.gotoAndStop(2);
+			visualizationBtn.addEventListener(MouseEvent.CLICK, changeVisual);
+			
+		}
+		
+		private function changeVisual(e:MouseEvent):void 
+		{
+			changeAxisVisualization();
 		}
 		
 		private function addListenersTextoExplicativo():void 
@@ -294,6 +310,18 @@ package
 				if (axisX2.rightBracket.x > axisX2.widthAxis) setMessage("limite superior de L(não visível).");
 				else setMessage("limite superior de L.");
 			} );
+			
+			indicadorLambda.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(x) não está visível.") } );
+			indicadorX0.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(x0) não está visível.") } );
+			
+			indicadorLambda2.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("x não está visível.") } );
+			indicadorX02.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("x0 não está visível.") } );
+			
+			indicadorDownX0.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("x0 não está visível.") } );
+			indicadorDownLambda.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("x não está visível.") } );
+			
+			indicadorUpX0.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(x0) não está visível.") } );
+			indicadorUpLambda.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(x) não está visível.") } );
 			
 			stage.addEventListener(MouseEvent.MOUSE_OUT, setLabelOfState);
 			
@@ -355,9 +383,9 @@ package
 				}else {
 					x0Fx0.visible = showAnswer;
 					x0Fx0.graphics.clear();
-					x0Fx0.graphics.beginFill(0x800000);
-					x0Fx0.graphics.drawCircle(posX0.x, posX0.y + distToPoint, 3);
-					x0Fx0.graphics.endFill();
+					//x0Fx0.graphics.beginFill(0x800000);
+					//x0Fx0.graphics.drawCircle(posX0.x, posX0.y + distToPoint, 3);
+					//x0Fx0.graphics.endFill();
 					x0Fx0.graphics.lineStyle(2, 0x800000);
 					x0Fx0.graphics.moveTo(posX0.x, posX0.y + distToPoint);
 					x0Fx0.graphics.curveTo(posX0.x, (posFx0.y - posX0.y)/2 + posX0.y - distToPoint/2, (posFx0.x - posX0.x) / 2 + posX0.x, (posFx0.y - posX0.y)/2 + posX0.y - distToPoint / 2);
@@ -383,7 +411,7 @@ package
 		{
 			var posLambda:Point = new Point(axisX1.getPontoPosition(Model.LAMBDA) + axisX1.x, axisX1.y);
 			var posFlambda:Point = new Point(axisX2.getPontoPosition(Model.FLAMBDA) + axisX2.x, axisX2.y);
-			var distToPoint:Number = 20;
+			var distToPoint:Number = 25;
 			
 			if (posLambda.x < axisX1.x) {
 				if (posFlambda.x < axisX1.x || posFlambda.x > axisX1.x + axisX1.widthAxis) {
@@ -420,9 +448,9 @@ package
 					indicadorLambda.visible = true;
 				}else {
 					lambdaFlambda.graphics.clear();
-					lambdaFlambda.graphics.beginFill(0x800000);
-					lambdaFlambda.graphics.drawCircle(posLambda.x, posLambda.y + distToPoint, 3);
-					lambdaFlambda.graphics.endFill();
+					//lambdaFlambda.graphics.beginFill(0x800000);
+					//lambdaFlambda.graphics.drawCircle(posLambda.x, posLambda.y + distToPoint, 3);
+					//lambdaFlambda.graphics.endFill();
 					lambdaFlambda.graphics.lineStyle(2, 0x800000);
 					lambdaFlambda.graphics.moveTo(posLambda.x, posLambda.y + distToPoint);
 					lambdaFlambda.graphics.curveTo(posLambda.x, (posFlambda.y - posLambda.y)/2 + posLambda.y - distToPoint/2, (posFlambda.x - posLambda.x) / 2 + posLambda.x, (posFlambda.y - posLambda.y)/2 + posLambda.y - distToPoint / 2);
@@ -470,21 +498,23 @@ package
 		{
 			var posX0:Point = new Point(axisX1.getBracketX() + axisX1.x, axisX1.y);
 			var posFx0:Point = new Point(axisX2.x, axisX2.y - axisX2.getPontoPosition(Model.FXO));
-			var distToPoint:Number = 20;
+			var distToPoint:Number = 25;
 			
 			x0Fx0.visible = showAnswer;
 			x0Fx0.graphics.clear();
-			x0Fx0.graphics.lineStyle(2, 0x800000);
+			x0Fx0.graphics.lineStyle(2, 0x808080);
 			
 			
 			if((posX0.x > axisX1.x) && (posX0.x < axisX1.x + axisX1.widthAxis)){
 				if (posFx0.y < axisX2.y && posFx0.y > axisX2.y - axisX2.widthAxis) {//Ambos dentro da tela.
-					x0Fx0.graphics.moveTo(posX0.x, posX0.y - distToPoint);
-					x0Fx0.graphics.lineTo(posX0.x, posFx0.y);
+					//x0Fx0.graphics.moveTo(posX0.x, posX0.y - distToPoint);
+					//x0Fx0.graphics.lineTo(posX0.x, posFx0.y);
+					dashTo(posX0.x, posX0.y - distToPoint, posX0.x, posFx0.y, 4, 4, x0Fx0);
 					x0Fx0.graphics.beginFill(0x800000);
 					x0Fx0.graphics.drawCircle(posX0.x, posFx0.y, 2);
 					x0Fx0.graphics.endFill();
-					x0Fx0.graphics.lineTo(posFx0.x + distToPoint, posFx0.y);
+					//x0Fx0.graphics.lineTo(posFx0.x + distToPoint, posFx0.y);
+					dashTo(posX0.x, posFx0.y, posFx0.x + distToPoint, posFx0.y, 4, 4, x0Fx0);
 				}else {//f(x0) fora da tela.
 					indicadorUpX0.x = posX0.x;
 					indicadorUpX0.y = posX0.y - distToPoint;
@@ -506,16 +536,18 @@ package
 			var distToPoint:Number = 20;
 			
 			lambdaFlambda.graphics.clear();
-			lambdaFlambda.graphics.lineStyle(2, 0x800000);
+			lambdaFlambda.graphics.lineStyle(2, 0x808080);
 			
 			if((posLambda.x > axisX1.x) && (posLambda.x < axisX1.x + axisX1.widthAxis)){
 				if (posFlambda.y < axisX2.y && posFlambda.y > axisX2.y - axisX2.widthAxis) {//Ambos dentro da tela.
-					lambdaFlambda.graphics.moveTo(posLambda.x, posLambda.y - distToPoint);
-					lambdaFlambda.graphics.lineTo(posLambda.x, posFlambda.y);
+					//lambdaFlambda.graphics.moveTo(posLambda.x, posLambda.y - distToPoint);
+					//lambdaFlambda.graphics.lineTo(posLambda.x, posFlambda.y);
+					dashTo(posLambda.x, posLambda.y - distToPoint, posLambda.x, posFlambda.y, 4, 4, lambdaFlambda);
 					lambdaFlambda.graphics.beginFill(0x800000);
 					lambdaFlambda.graphics.drawCircle(posLambda.x, posFlambda.y, 2);
 					lambdaFlambda.graphics.endFill();
-					lambdaFlambda.graphics.lineTo(posFlambda.x + distToPoint, posFlambda.y);
+					//lambdaFlambda.graphics.lineTo(posFlambda.x + distToPoint, posFlambda.y);
+					dashTo(posLambda.x, posFlambda.y, posFlambda.x + distToPoint, posFlambda.y, 4, 4, lambdaFlambda);
 				}else {//f(lambda) fora da tela.
 					indicadorUpLambda.x = posLambda.x;
 					indicadorUpLambda.y = posLambda.y - distToPoint;
@@ -580,7 +612,7 @@ package
 		override public function reset(e:MouseEvent = null):void
 		{
 			//setShowAnswer(!showAnswer);
-			changeAxisVisualization();
+			//changeAxisVisualization();
 		}
 		
 		private var eixosParalelos:Boolean = true;1
@@ -602,12 +634,14 @@ package
 			indicadorUpX0.visible = false;
 			
 			if (eixosParalelos) {
+				visualizationBtn.gotoAndStop(1);
 				eixosParalelos = !eixosParalelos;
 				axisX1.yAdjust *= -1;
 				axisX1.drawDelta();
 				Actuate.tween(axisX1, 0.5, { x: 130, y: 600} ).ease(Linear.easeNone);
 				Actuate.tween(axisX2, 0.5, { x: 80, y:550, rotation: -90 } ).ease(Linear.easeNone).onComplete(redesenhaIndicadores);
 			}else {
+				visualizationBtn.gotoAndStop(2);
 				eixosParalelos = !eixosParalelos;
 				axisX1.yAdjust *= -1;
 				axisX1.drawDelta();
@@ -615,6 +649,57 @@ package
 				Actuate.tween(axisX2, 0.5, { x: 100, y:500, rotation: 0 } ).ease(Linear.easeNone).onComplete(redesenhaIndicadores);
 			}
 			
+		}
+		
+		/*
+		 * A função dashTo desenha uma linha tracejada.
+		 * 
+		 * by Ric Ewing (ric@formequalsfunction.com) - version 1.2 - 5.3.2002
+		 * 
+		 * startx, starty = beginning of dashed line
+		 * endx, endy = end of dashed line
+		 * len = length of dash
+		 * gap = length of gap between dashes
+		 */
+		private function dashTo (startx:Number, starty:Number, endx:Number, endy:Number, len:Number, gap:Number, spr:Sprite) : void {
+			
+			// init vars
+			var seglength, delta, deltax, deltay, segs, cx, cy, radians;
+			// calculate the legnth of a segment
+			seglength = len + gap;
+			// calculate the length of the dashed line
+			deltax = endx - startx;
+			deltay = endy - starty;
+			delta = Math.sqrt((deltax * deltax) + (deltay * deltay));
+			// calculate the number of segments needed
+			segs = Math.floor(Math.abs(delta / seglength));
+			// get the angle of the line in radians
+			radians = Math.atan2(deltay,deltax);
+			// start the line here
+			cx = startx;
+			cy = starty;
+			// add these to cx, cy to get next seg start
+			deltax = Math.cos(radians)*seglength;
+			deltay = Math.sin(radians)*seglength;
+			// loop through each seg
+			for (var n = 0; n < segs; n++) {
+				spr.graphics.moveTo(cx,cy);
+				spr.graphics.lineTo(cx+Math.cos(radians)*len,cy+Math.sin(radians)*len);
+				cx += deltax;
+				cy += deltay;
+			}
+			// handle last segment as it is likely to be partial
+			spr.graphics.moveTo(cx,cy);
+			delta = Math.sqrt((endx-cx)*(endx-cx)+(endy-cy)*(endy-cy));
+			if(delta>len){
+				// segment ends in the gap, so draw a full dash
+				spr.graphics.lineTo(cx+Math.cos(radians)*len,cy+Math.sin(radians)*len);
+			} else if(delta>0) {
+				// segment is shorter than dash so only draw what is needed
+				spr.graphics.lineTo(cx+Math.cos(radians)*delta,cy+Math.sin(radians)*delta);
+			}
+			// move the pen to the end position
+			spr.graphics.moveTo(endx,endy);
 		}
 		
 	}

@@ -41,15 +41,31 @@ package
 		private var dinamicLockList:Dictionary = new Dictionary();
 		private var deltaLock:Dictionary = new Dictionary();
 		private var invisiblesEver:Dictionary = new Dictionary();
+		private var rotulo:TLFTextField;
+		private var textFormatLabel:TextFormat = new TextFormat("Verdana", 12, 0x000000);
 		
-		public function EixoZoom(xmin:Number, xmax:Number, widthAxis:Number) 
+		public function EixoZoom(xmin:Number, xmax:Number, widthAxis:Number, rotulo:String) 
 		{
 			this.xmin = xmin;
 			this.xmax = xmax;
 			this.widthAxis = widthAxis;
 			
 			axis = new AxisX(xmin, xmax, widthAxis);
+			axis.tickAlignment = AxisX.TICKS_CENTER;
 			addChild(axis);
+			
+			this.rotulo = new TLFTextField();
+			this.rotulo.defaultTextFormat = new TextFormat("Verdana", 10, 0xC0C0C0);
+			this.rotulo.mouseChildren = false;
+			this.rotulo.multiline = false;
+			this.rotulo.width = 200;
+			this.rotulo.text = rotulo;
+			this.rotulo.width = this.rotulo.textWidth + 5;
+			this.rotulo.height = this.rotulo.textHeight + 4;
+			this.rotulo.selectable = false;
+			addChild(this.rotulo);
+			this.rotulo.x = widthAxis - this.rotulo.width;
+			this.rotulo.y = this.rotulo.height + 4;
 			
 			createZoom();
 		}
@@ -58,6 +74,9 @@ package
 		{
 			zoomOutBtn = new ZoomMinusBtn();
 			zoomInBtn = new ZoomPlusBtn();
+			
+			zoomOutBtn.mouseChildren = false;
+			zoomInBtn.mouseChildren = false;
 			
 			zoomInBtn.x = widthAxis - zoomInBtn.width / 2;
 			zoomInBtn.y = -50;
@@ -78,6 +97,7 @@ package
 		private var timerToZoom:Timer = new Timer(200);
 		private function initZoom(e:MouseEvent):void 
 		{
+			trace(e.target);
 			if (e.target == zoomInBtn) {
 				timerToZoom.addEventListener(TimerEvent.TIMER, zoomIn);
 				zoomIn(null);
@@ -254,7 +274,7 @@ package
 			this.deltaNome = deltaNome;
 			
 			deltaLabel = new TLFTextField();
-			deltaLabel.defaultTextFormat = new TextFormat("Verdana", 15, 0x7B5A15);
+			deltaLabel.defaultTextFormat = textFormatLabel;
 			//deltaLabel.embedFonts = true;
 			deltaLabel.mouseChildren = false;
 			deltaLabel.multiline = false;
@@ -441,20 +461,43 @@ package
 			else deltaLabel.y = bracketPoint.y - 2 * yAdjust - deltaLabel.height - 5;
 		}
 		
+		private var leftArrow:Seta;
 		private function drawleftArrow(ptX:Number, ptY:Number):void
 		{
-			sprDelta.graphics.curveTo(ptX + heightArrow / 2, ptY, ptX + heightArrow, ptY - widthArrow / 2);
-			sprDelta.graphics.moveTo(ptX, ptY);
-			sprDelta.graphics.curveTo(ptX + heightArrow / 2, ptY, ptX + heightArrow, ptY + widthArrow / 2);
-			sprDelta.graphics.moveTo(ptX, ptY);
+			if (leftArrow == null) {
+				leftArrow = new Seta();
+				leftArrow.rotation = 180;
+				leftArrow.gotoAndStop(1);
+				leftArrow.scaleX = leftArrow.scaleY = 0.25;
+				addChild(leftArrow);
+			}
+			
+			leftArrow.x = ptX;
+			leftArrow.y = ptY;
+			
+			//sprDelta.graphics.curveTo(ptX + heightArrow / 2, ptY, ptX + heightArrow, ptY - widthArrow / 2);
+			//sprDelta.graphics.moveTo(ptX, ptY);
+			//sprDelta.graphics.curveTo(ptX + heightArrow / 2, ptY, ptX + heightArrow, ptY + widthArrow / 2);
+			//sprDelta.graphics.moveTo(ptX, ptY);
 		}
 		
+		private var rightArrow:Seta;
 		private function drawRightArrow(ptX:Number, ptY:Number):void
 		{
-			sprDelta.graphics.curveTo(ptX - heightArrow / 2, ptY, ptX - heightArrow, ptY - widthArrow / 2);
-			sprDelta.graphics.moveTo(ptX, ptY);
-			sprDelta.graphics.curveTo(ptX - heightArrow / 2, ptY, ptX - heightArrow, ptY + widthArrow / 2);
-			sprDelta.graphics.moveTo(ptX, ptY);
+			if (rightArrow == null) {
+				rightArrow = new Seta();
+				rightArrow.gotoAndStop(1);
+				rightArrow.scaleX = rightArrow.scaleY = 0.25;
+				addChild(rightArrow);
+			}
+			
+			rightArrow.x = ptX;
+			rightArrow.y = ptY;
+			
+			//sprDelta.graphics.curveTo(ptX - heightArrow / 2, ptY, ptX - heightArrow, ptY - widthArrow / 2);
+			//sprDelta.graphics.moveTo(ptX, ptY);
+			//sprDelta.graphics.curveTo(ptX - heightArrow / 2, ptY, ptX - heightArrow, ptY + widthArrow / 2);
+			//sprDelta.graphics.moveTo(ptX, ptY);
 		}
 		
 		/*
