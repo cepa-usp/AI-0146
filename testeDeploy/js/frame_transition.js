@@ -1,9 +1,4 @@
-// Current frame
-var frame = 0;
-var content;
 
-// Amount of frames
-var N_FRAMES = 0;
 
 /*
  * Step frame forward
@@ -11,13 +6,7 @@ var N_FRAMES = 0;
 function stepForward () {
 	var next_frame = frame + 1;
 	if (next_frame <= N_FRAMES) {
-		if (preStepForwardHook()) {
-			message("Transição " + frame + " -> " + next_frame);
-			setFrame(next_frame);
-		}
-		else {
-			refusedStepForwardHook();
-		}
+		setFrame(next_frame);
 	}
 }
 
@@ -27,13 +16,7 @@ function stepForward () {
 function stepBackward () {
 	var next_frame = frame - 1;  
 	if (next_frame >= 0) {
-		if (preStepBackwardHook()) {
-			message("Transição " + frame + " -> " + next_frame);			
-			setFrame(next_frame);
-		}
-		else {
-			refusedStepBackwardHook();
-		}
+		setFrame(next_frame);
 	}
 }
 
@@ -41,33 +24,58 @@ function stepBackward () {
  * Sets current frame to <targetFrame>
  */
 function setFrame(targetFrame) {
- 
 	if (!isNaN(targetFrame) && targetFrame >= 0 && targetFrame <= N_FRAMES) { 
-		if (preSetFrameHook(targetFrame)) {
-			if(frame!=targetFrame){
+			if(frame!=targetFrame && frame>=0){
 				var oldContentElement = content[frame].id;
 				callLeaveFrame(oldContentElement);
 			}
 			
 			var contentElement = content[targetFrame].id;
-			callEnterFrame(contentElement);
-			
 			var htmlContent = $(content[targetFrame]).html();
 			$('#textArea').html(htmlContent);
 
-			frame = targetFrame;			
-			postSetFrameHook(targetFrame);
 			
-		}
-		else {
-			refusedSetFrameHook(targetFrame);
-		}
+			callEnterFrame(contentElement);
+			
+
+			frame = targetFrame;	
+			memento.frame = frame;
+			//postSetFrameHook(targetFrame);
+			
+			if(frame == 0){
+				setForwardButtonEnabled(true);
+				setBackwardButtonEnabled(false);
+				setResetButtonEnabled(false);
+			}else if(frame == N_FRAMES - 1){
+				setForwardButtonEnabled(false);
+				setBackwardButtonEnabled(true);
+				setResetButtonEnabled(true);
+			}else{
+				setForwardButtonEnabled(true);
+				setBackwardButtonEnabled(true);
+				setResetButtonEnabled(false);
+			}
 	}
 }
 
-// Auxiliary function: counts the amount of frames
-function countFrames () {
-	return $(".frame").length - 1;
+function setForwardButtonEnabled(booleanValue){
+	$("#step-forward").button({disabled: !booleanValue});
+}
+
+function setBackwardButtonEnabled(booleanValue){
+	$("#step-backward").button({disabled: !booleanValue});
+}
+
+function setResetButtonEnabled(booleanValue){
+	$("#reset").button({disabled: !booleanValue});
+}
+
+function setInputEnabled(textfieldId, booleanValue){
+	if(!booleanValue){
+		$("#" + textfieldId).attr('disabled', 'disabled');	
+	} else {
+		$("#" + textfieldId).removeAttr('disabled');
+	}
 }
 
 // Auxiliary function: shows a given <element>

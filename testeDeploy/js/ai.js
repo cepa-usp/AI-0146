@@ -11,6 +11,9 @@ var t1;
 var debug = true;
 var content = {};
 
+var frame = 0;
+var N_FRAMES = 0;
+
 $(document).ready(init); // Inicia a AI.
 $(window).unload(uninit); // Encerra a AI.
 
@@ -29,10 +32,12 @@ function loadContent(){
 function onContentLoaded(){
 	content = $('#total').find(".texto");
 	$('#total').remove();
-
+	frame = 0;
+	N_FRAMES = content.length;
 	preFetchHook();
 	memento = fetch();
-	postFetchHook(memento);	
+	configButtons();
+	postFetchHook(memento);
 }
 
 function callEnterFrame(contentElement){
@@ -68,7 +73,7 @@ function uninit () {
  */
 function reset () {
 	
-  movie.reset();
+  //movie.reset();
   
   // NÃO ALTERA memento.completed!
   // NÃO ALTERA memento.score!
@@ -96,7 +101,7 @@ function fetch () {
   if (session.standalone) {
   
       var stream = localStorage.getItem(LOCAL_STORAGE_KEY);
-      //if (stream != null) ans = JSON.parse(stream);
+      if (stream != null) ans = JSON.parse(stream);
   }
   // Se estiver conectado a um LMS, usa SCORM
   else {
@@ -179,7 +184,7 @@ function checkCallbacks () {
 		setFrame(memento.frame);
 
 		// Oculta a mensagem "Configurando a atividade. Por favor, aguarde."
-		$(".init-message").hide();
+		//$(".init-message").hide();
 	}
 	catch(error) {
 		++init_tries;

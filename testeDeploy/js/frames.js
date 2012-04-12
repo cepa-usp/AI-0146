@@ -8,7 +8,8 @@ function texto0_leaveFrame(){
 
 /*------------------------------------------------------------------------------------------------*/
 
-function texto1_enterFrame(){
+function interacao1_enterFrame(){
+	alert("entrou");
 	movie.setX0(2);
 	movie.setEpsilon(3);
 	movie.lockX0(true);
@@ -16,45 +17,56 @@ function texto1_enterFrame(){
 	movie.lockL(false);
 	movie.lockDelta(false);
 }
-function texto1_leaveFrame(){
+function interacao1_leaveFrame(){
+	
+}
+
+/*------------------------------------------------------------------------------------------------*/
+
+function interacao2_enterFrame(){
 	if(Math.abs(Math.abs(movie.getL()) - 20) > 2) movie.setL(20);
 	if(Math.abs(Math.abs(movie.getDelta()) - 1) > 0.1) movie.setDelta(1);
 }
+function interacao2_leaveFrame(){
+	//alert("saiu outro");
+}
 
 /*------------------------------------------------------------------------------------------------*/
 
-function outrotexto_enterFrame(){
+function interacao3_enterFrame(){
 	movie.setDelta(0.2);
 }
-function outrotexto_leaveFrame(){
+function interacao3_leaveFrame(){
 	//alert("saiu outro");
 }
 
 /*------------------------------------------------------------------------------------------------*/
 
-function outrotexto2_enterFrame(){
+function interacao4_enterFrame(){
 	movie.setEpsilon(1);
 }
-function outrotexto2_leaveFrame(){
+function interacao4_leaveFrame(){
 	//alert("saiu outro");
 }
 
 /*------------------------------------------------------------------------------------------------*/
 
-function outrotexto3_enterFrame(){
+function interacao5_enterFrame(){
 	movie.setEpsilon(0.5);
-}
-function outrotexto3_leaveFrame(){
-	//alert("saiu outro");
-}
-
-/*------------------------------------------------------------------------------------------------*/
-
-function outrotexto4_enterFrame(){
 	if(movie.getDelta() > 0.05) movie.setDelta(0.05);
 }
-function outrotexto4_leaveFrame(){
+function interacao5_leaveFrame(){
 	//alert("saiu outro");
 }
 
 /*------------------------------------------------------------------------------------------------*/
+
+function interacao6_enterFrame(){
+	if(movie.getDelta() > 0.05) movie.setDelta(0.05);
+}
+function interacao6_leaveFrame(){
+	//alert("saiu outro");
+}
+
+/*------------------------------------------------------------------------------------------------*/
+

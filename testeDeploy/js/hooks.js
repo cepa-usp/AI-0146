@@ -18,26 +18,20 @@ function preFetchHook () {
 	});
 
 	// Referência para o filme Flash. 
-	movie = $("#ai")[0]; 	
-	
-	// Seta o número de frames
-	N_FRAMES = 10;
-  
-	// Botão "avançar"
-	$("#step-backward").button().click(stepBackwardOrNot);
-	$("#step-forward").button().click(stepForwardOrFinish);
+	movie = $("#ai")[0];
+}
 
-	// Tecla "enter" (também avança)
+function configButtons () {
+	$("#step-backward").button().click(onButtonBackward);
+	$("#step-forward").button().click(onButtonForward);
 	$(":input").keypress(function (event) {
-		if (event.which == 13) stepForwardOrFinish();
+		if (event.which == 13) onButtonForward();
 	});
-	
-	// Botão "reset"
+
+	// reset
 	$("#reset").button({disabled: true}).click(function () {
 		$("#reset-dialog").dialog("open");
 	});
-
-	// Configura as caixa de diálogo do botão "reset".
 	$("#reset-dialog").dialog({
 		buttons: {
 			"Ok": function () {
@@ -52,8 +46,7 @@ function preFetchHook () {
 		modal: true,
 		width: 350
 	});
-
-	// Configura as caixa de diálogo de seleção dos animais (imagens).
+	
 	$("#finish-dialog").dialog({
 		buttons: {
 			"Ok": function () {
@@ -64,7 +57,6 @@ function preFetchHook () {
 		modal: true,
 		width: 500
 	});	
-	
 }
 
 /*
@@ -85,90 +77,21 @@ function postFetchHook (state) {
 	t1 = new Date().getTime();
 	checkCallbacks();
 }
-
-/*
- * Before set-frame hook.
- */
-function preSetFrameHook (targetFrame) {
-	return true;
+function onButtonForward () {
+	if (memento.frame < N_FRAMES - 1) {
+		stepForward();
+	}
+	else {
+		finish();
+	}
 }
 
-/*
- * After set-frame hook.
- */
-function postSetFrameHook (targetFrame) {
-	memento.frame = targetFrame;
-	
-	// Configura os botões "avançar" e "recomeçar"
-	var allow_reset = memento.completed && memento.frame > 0;
-	$("#reset").button({disabled: !allow_reset});
-	$("#step-forward").button({disabled: (memento.frame == N_FRAMES && memento.completed)});
-  
-	
+function onButtonBackward () {
+	if (memento.frame > 0) {
+		stepBackward();
+	}
 }
 
-/**
- * This hook runs when the pre-set-frame hook returns false.
- */
-function refusedSetFrameHook (targetFrame) {
-}
-
-/*
- * Before step-forward hook. If it returns false, step-foward will not be executed.
- */
-function preStepForwardHook () {
-  
-  var proceed = false;
-  
-  //proceed = preStepFunctions[frame]("frame-"+frame);
-  proceed = true;
-  
-  return proceed;
-}
-
-/*
- * After step-forward hook.
- */
-function postStepForwardHook () {
-
-	memento.frame = frame;
-  
-	var allow_reset = memento.completed && memento.frame > 0;
-	$("#reset").button({disabled: !allow_reset});
-	
-	postStepFunctions[frame];
-	
-	commit(memento);
-}
-
-/*
- * Step-forward failure hook. It runs after "preStepForwardHook()" returns false
- */
-function refusedStepForwardHook () {
-}
-
-/*
- * Before step-backward hook. If it returns false, step-backward will not be executed.
- */
-function preStepBackwardHook () {
-	return true;
-}
-
-/*
- * After step-backward hook.
- */
-function postStepBackwardHook () {
-}
-
-/*
- * Step-backward failure hook. It runs after "preStepBackwardHook()" returns false
- */
-function refusedStepBackwardHook () {
-}
-
-/*
- * Finish this AI
- */
 function finish () {
 	
 	$(".completion-message").show();
@@ -179,21 +102,13 @@ function finish () {
 	
 	if (!memento.completed) {
 		memento.completed = true;
-		//memento.score = Math.max(0, Math.min(Math.ceil(100 * memento.count / memento.answers.length), 100));
+		memento.score = Math.max(0, Math.min(Math.ceil(100 * memento.count / memento.answers.length), 100));
 		commit(memento);
 	}
 }
 
-/*
- * Move forward, stepping to the next frame or finishing this AI
- */
-function stepForwardOrFinish () {
-	if (memento.frame < N_FRAMES) stepForward();
-	else finish();
-}
-
-function stepBackwardOrNot () {
-	if (memento.frame > 0) stepBackward();
+function setBackwardButtonEnabled(booleanValue){
+	$("#step-backward").button({disabled: !booleanValue});
 }
 
 // Checks if given selector (type input) is a valid number. If not, resets field.
