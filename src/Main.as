@@ -286,42 +286,50 @@ package
 		
 		private function addListenersTextoExplicativo():void 
 		{
-			axisX1.getProperty(Model.LAMBDA).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("lambda é um ponto da vizinhança de x_0.") } );
-			axisX1.getProperty(Model.XO).addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("x_0 é valor do qual lambda se aproxima indefinidamente.") } );
-			axisX1.deltaLabel.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("delta é o tamanho da vizinhança de x_0.") } );
+			axisX1.getProperty(Model.LAMBDA).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage(Model.LAMBDA + " é um ponto da vizinhança de " + Model.XO + ".") } );
+			axisX1.getProperty(Model.XO).addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage(Model.XO + " é valor do qual " + Model.LAMBDA + " se aproxima indefinidamente.") } );
+			axisX1.deltaLabel.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage(Model.DELTA + " é o tamanho da vizinhança de " + Model.XO + ".") } );
 			axisX1.leftBracket.addEventListener(MouseEvent.MOUSE_OVER, function():void { 
-				if (axisX1.leftBracket.x < 0) setMessage("limite inferior de x_0(não visível).");
-				else setMessage("limite inferior de x_0.");
+				if (axisX1.leftBracket.x < 0) setMessage("limite inferior de " + Model.XO + " (não visível).");
+				else setMessage("limite inferior de " + Model.XO + ".");
 			} );
 			axisX1.rightBracket.addEventListener(MouseEvent.MOUSE_OVER, function():void { 
-				if (axisX1.rightBracket.x > axisX1.widthAxis) setMessage("limite superior de x_0(não visível).");
-				else setMessage("limite superior de x_0.");
+				if (axisX1.rightBracket.x > axisX1.widthAxis) setMessage("limite superior de " + Model.XO + " (não visível).");
+				else setMessage("limite superior de " + Model.XO + ".");
 			} );
 			
-			axisX2.getProperty(Model.FLAMBDA).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(lambda) é o valor de f, calculado em x = lambda.") } );
-			axisX2.getProperty(Model.FXO).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(x_0) é o valor de f, calculado em x = x_0.") } );
-			axisX2.getProperty(Model.PT_L).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("L é o limite procurado.") } );
-			axisX2.deltaLabel.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("epsilon é o tamanho da vizinhança de L.") } );
+			axisX2.getProperty(Model.FLAMBDA).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage(Model.FLAMBDA + " é o valor de f, calculado em " + Model.LAMBDA + ".") } );
+			axisX2.getProperty(Model.FXO).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage(Model.FXO + " é o valor de f, calculado em x") } );
+			axisX2.getProperty(Model.PT_L).addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage(Model.PT_L + " é o limite procurado.") } );
+			axisX2.deltaLabel.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage(Model.EPSILON + " é o tamanho da vizinhança de " + Model.PT_L + ".") } );
 			axisX2.leftBracket.addEventListener(MouseEvent.MOUSE_OVER, function():void {
-				if (axisX2.leftBracket.x < 0) setMessage("limite inferior de L(não visível).");
-				else setMessage("limite inferior de L.");
+				if (axisX2.leftBracket.x < 0) setMessage("limite inferior de " + Model.PT_L + " (não visível).");
+				else setMessage("limite inferior de " + Model.PT_L + ".");
 			} );
 			axisX2.rightBracket.addEventListener(MouseEvent.MOUSE_OVER, function():void {
-				if (axisX2.rightBracket.x > axisX2.widthAxis) setMessage("limite superior de L(não visível).");
-				else setMessage("limite superior de L.");
+				if (axisX2.rightBracket.x > axisX2.widthAxis) setMessage("limite superior de " + Model.PT_L + " (não visível).");
+				else setMessage("limite superior de " + Model.PT_L + ".");
 			} );
 			
 			indicadorLambda.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(x) não está visível.") } );
-			indicadorX0.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(x0) não está visível.") } );
+			indicadorX0.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage(Model.FXO + " não está visível.") } );
 			
 			indicadorLambda2.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("x não está visível.") } );
-			indicadorX02.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("x0 não está visível.") } );
+			indicadorX02.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage(Model.XO + " não está visível.") } );
 			
-			indicadorDownX0.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("x0 não está visível.") } );
+			indicadorDownX0.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage(Model.XO + " não está visível.") } );
 			indicadorDownLambda.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("x não está visível.") } );
 			
-			indicadorUpX0.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(x0) não está visível.") } );
-			indicadorUpLambda.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage("f(x) não está visível.") } );
+			indicadorUpX0.addEventListener(MouseEvent.MOUSE_OVER, function():void {setMessage(Model.FXO + " não está visível.") } );
+			indicadorUpLambda.addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("f(x) não está visível.") } );
+			
+			axisX1.zoomInBtn.addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("Zoom.") } );
+			axisX1.zoomOutBtn.addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("Zoom.") } );
+			
+			axisX2.zoomInBtn.addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("Zoom.") } );
+			axisX2.zoomOutBtn.addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("Zoom.") } );
+			
+			visualizationBtn.addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("Alterna os modos de exibição dos eixos.") } );
 			
 			stage.addEventListener(MouseEvent.MOUSE_OUT, setLabelOfState);
 			
@@ -338,7 +346,8 @@ package
 		
 		private function setMessage(msg:String):void
 		{
-			textoExplicativo.texto.text = msg;
+			//textoExplicativo.texto.text = msg;
+			textoExplicativo.texto.htmlText = msg;
 		}
 		
 		private function desenhaIndicadorXfX():void 
@@ -638,6 +647,7 @@ package
 				eixosParalelos = !eixosParalelos;
 				axisX1.yAdjust *= -1;
 				axisX1.drawDelta();
+				axisX2.zoomButtonsPerpendiculares(0.5);
 				Actuate.tween(axisX1, 0.5, { x: 130, y: 600} ).ease(Linear.easeNone);
 				Actuate.tween(axisX2, 0.5, { x: 80, y:550, rotation: -90 } ).ease(Linear.easeNone).onComplete(redesenhaIndicadores);
 			}else {
@@ -645,6 +655,7 @@ package
 				eixosParalelos = !eixosParalelos;
 				axisX1.yAdjust *= -1;
 				axisX1.drawDelta();
+				axisX2.zoomButtonsParalelos(0.5);
 				Actuate.tween(axisX1, 0.5, { x: 100, y: 200} ).ease(Linear.easeNone);
 				Actuate.tween(axisX2, 0.5, { x: 100, y:500, rotation: 0 } ).ease(Linear.easeNone).onComplete(redesenhaIndicadores);
 			}

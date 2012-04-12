@@ -37,19 +37,18 @@ package
 			
 			label = new TLFTextField();
 			label.name = "tlfText";
-			label.defaultTextFormat = new TextFormat("Verdana", 12, 0x000000);
+			label.defaultTextFormat = new TextFormat("Verdana", 14, 0x000000);
 			label.multiline = false;
 			label.selectable = false;
 			label.width = 5;
 			label.height = 20;
-			label.x = 7;
-			label.y = -26;
+			label.y = -22;
 			addChild(label);
 		}
 		
 		override public function set name(value:String):void
 		{
-			if (value == Model.XO) {
+			/*if (value == Model.XO) {
 				label.width = 200;
 				//label.text = value;
 				label.htmlText = "x";
@@ -58,41 +57,45 @@ package
 				
 				labelSub = new TLFTextField();
 				labelSub.name = "tlfTextSub";
-				labelSub.defaultTextFormat = new TextFormat("Verdana", 8, 0x000000);
+				labelSub.defaultTextFormat = new TextFormat("Verdana", 10, 0x000000);
 				labelSub.multiline = false;
 				labelSub.selectable = false;
 				labelSub.height = 20;
 				labelSub.width = 200;
 				labelSub.htmlText = "0";
 				labelSub.width = labelSub.textWidth + 5;
-				labelSub.x = 7 + label.textWidth;
-				labelSub.y = -20;
+				//labelSub.x = label.textWidth + 1;
+				labelSub.y = -16;
 				addChild(labelSub);
 				
-			}else{
+				label.x = -label.textWidth / 2 - labelSub.textWidth / 2;
+				labelSub.x = label.x + label.textWidth + 1;
+				
+			}else{*/
 				label.width = 200;
 				//label.text = value;
 				label.htmlText = value;
 				label.width = label.textWidth + 5;
 				super.name = value;
-			}
+				label.x = -label.textWidth / 2;
+			//}
 		}
 		
 		public function setLabel(value:String):void
 		{
-			if (super.name == Model.XO) {
+			/*if (super.name == Model.XO) {
 				label.width = 200;
 				//label.text = value;
 				var arr:Array = value.split("=");
 				if (arr.length > 1) label.htmlText = "x  =" + value.split("=")[1];
 				else label.htmlText = "x";
 				label.width = label.textWidth + 5;
-			}else{
+			}else{*/
 				label.width = 200;
 				//label.text = value;
 				label.htmlText = value;
 				label.width = label.textWidth + 5;
-			}
+			//}
 		}
 		
 	}

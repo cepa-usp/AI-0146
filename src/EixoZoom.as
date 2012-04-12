@@ -1,6 +1,8 @@
 package  
 {
 	import cepa.graph.rectangular.AxisX;
+	import com.eclecticdesignstudio.motion.Actuate;
+	import com.eclecticdesignstudio.motion.easing.Linear;
 	import fl.text.TLFTextField;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -34,15 +36,16 @@ package
 		//private var brackets:Array = [];
 		private var pontos:Array = [];
 		
-		private var zoomInBtn:ZoomPlusBtn;
-		private var zoomOutBtn:ZoomMinusBtn;
+		public var zoomInBtn:ZoomPlusBtn;
+		public var zoomOutBtn:ZoomMinusBtn;
 		
 		private var lockList:Dictionary = new Dictionary();
 		private var dinamicLockList:Dictionary = new Dictionary();
 		private var deltaLock:Dictionary = new Dictionary();
 		private var invisiblesEver:Dictionary = new Dictionary();
 		private var rotulo:TLFTextField;
-		private var textFormatLabel:TextFormat = new TextFormat("Verdana", 12, 0x000000);
+		private var textFormatLabel:TextFormat = new TextFormat("Verdana", 14, 0x000000);
+		private var nCasas:int = 2;
 		
 		public function EixoZoom(xmin:Number, xmax:Number, widthAxis:Number, rotulo:String) 
 		{
@@ -55,7 +58,7 @@ package
 			addChild(axis);
 			
 			this.rotulo = new TLFTextField();
-			this.rotulo.defaultTextFormat = new TextFormat("Verdana", 10, 0xC0C0C0);
+			this.rotulo.defaultTextFormat = new TextFormat("Verdana", 12, 0xC0C0C0);
 			this.rotulo.mouseChildren = false;
 			this.rotulo.multiline = false;
 			this.rotulo.width = 200;
@@ -78,11 +81,14 @@ package
 			zoomOutBtn.mouseChildren = false;
 			zoomInBtn.mouseChildren = false;
 			
-			zoomInBtn.x = widthAxis - zoomInBtn.width / 2;
-			zoomInBtn.y = -50;
+			zoomOutBtn.scaleX = zoomOutBtn.scaleY = 0.75;
+			zoomInBtn.scaleX = zoomInBtn.scaleY = 0.75;
 			
-			zoomOutBtn.x = zoomInBtn.x + zoomOutBtn.width + 5;
-			zoomOutBtn.y = zoomInBtn.y;
+			zoomOutBtn.x = widthAxis - zoomInBtn.width / 2;
+			zoomOutBtn.y = -50;
+			
+			zoomInBtn.x = zoomOutBtn.x - zoomInBtn.width - 5;
+			zoomInBtn.y = -50;
 			
 			zoomInBtn.buttonMode = true;
 			zoomOutBtn.buttonMode = true;
@@ -93,6 +99,19 @@ package
 			zoomInBtn.addEventListener(MouseEvent.MOUSE_DOWN, initZoom);
 			zoomOutBtn.addEventListener(MouseEvent.MOUSE_DOWN, initZoom);
 		}
+		
+		public function zoomButtonsParalelos(time:Number):void
+		{
+			Actuate.tween(zoomInBtn, time, { /*x: widthAxis - zoomInBtn.width / 2, y:-50, */rotation: 0 } ).ease(Linear.easeNone);
+			Actuate.tween(zoomOutBtn, time, { /*x: widthAxis - zoomInBtn.width / 2 - zoomOutBtn.width - 5, y:-50, */rotation: 0 } ).ease(Linear.easeNone);
+		}
+		
+		public function zoomButtonsPerpendiculares(time:Number):void
+		{
+			Actuate.tween(zoomInBtn, time, { /*x: widthAxis + zoomInBtn.height / 2, y:50, */rotation: 90 } ).ease(Linear.easeNone);
+			Actuate.tween(zoomOutBtn, time, { /*x: widthAxis + zoomInBtn.height / 2, y:50 + zoomOutBtn.width + 5, */rotation: 90 } ).ease(Linear.easeNone);
+		}
+		
 		
 		private var timerToZoom:Timer = new Timer(200);
 		private function initZoom(e:MouseEvent):void 
@@ -117,6 +136,10 @@ package
 			
 			setRange(newXmin, newXmax);
 			dispatchEvent(new ModelEvent(ModelEvent.CHANGE_ZOOM, true));
+			
+			nCasas = Math.round(Math.log(newXmax - newXmin) / Math.LN10);
+			if (nCasas >= 0) nCasas = 2;
+			else nCasas = 2 - nCasas;
 		}
 		
 		private function zoomOut(e:TimerEvent):void 
@@ -127,6 +150,10 @@ package
 			
 			setRange(newXmin, newXmax);
 			dispatchEvent(new ModelEvent(ModelEvent.CHANGE_ZOOM, true));
+			
+			nCasas = Math.round(Math.log(newXmax - newXmin) / Math.LN10);
+			if (nCasas >= 0) nCasas = 2;
+			else nCasas = 2 - nCasas;
 		}
 		
 		private function stopZoom(e:MouseEvent):void 
@@ -180,13 +207,13 @@ package
 		{
 			if(e.target is Ponto){
 				var pt:Ponto = Ponto(e.target);
-				pt.setLabel(pt.nomeBase + " = " + pt.eixoPt.toFixed(2));
+				pt.setLabel(pt.nomeBase + " = " + pt.eixoPt.toPrecision(nCasas));
 				showingName = true;
 			}else if(e.target is TLFTextField){
 				//var txt:TextField = TextField(e.target);
 				var txt:TLFTextField = TLFTextField(e.target);
 				txt.width = 200;
-				txt.text = deltaNome + " = " + delta.toFixed(2);
+				txt.text = deltaNome + " = " + delta.toPrecision(nCasas);
 				txt.width = txt.textWidth + 5;
 			}else {
 				trace(e.target);
@@ -231,7 +258,7 @@ package
 			draggingPt.eixoPt = axis.pixel2x(draggingPt.x);
 			
 			if (showingName) {
-				draggingPt.setLabel(draggingPt.nomeBase + " = " + draggingPt.eixoPt.toFixed(2));
+				draggingPt.setLabel(draggingPt.nomeBase + " = " + draggingPt.eixoPt.toPrecision(nCasas));
 			}
 			
 			if(draggingPt.name == Model.LAMBDA){
@@ -247,7 +274,7 @@ package
 			draggingPt.eixoPt = axis.pixel2x(draggingPt.x);
 			
 			if (showingName) {
-				draggingPt.setLabel(draggingPt.nomeBase + " = " + draggingPt.eixoPt.toFixed(2));
+				draggingPt.setLabel(draggingPt.nomeBase + " = " + draggingPt.eixoPt.toPrecision(nCasas));
 			}
 			
 			if(draggingPt.name == Model.LAMBDA){
@@ -346,7 +373,7 @@ package
 			bracketPoint.eixoPt = axis.pixel2x(bracketPoint.x);
 			
 			if (showingName) {
-				bracketPoint.setLabel(bracketPoint.nomeBase + " = " + bracketPoint.eixoPt.toFixed(2));
+				bracketPoint.setLabel(bracketPoint.nomeBase + " = " + bracketPoint.eixoPt.toPrecision(nCasas));
 			}
 			
 			posicionaBrackets();
