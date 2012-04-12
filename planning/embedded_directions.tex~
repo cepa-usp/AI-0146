@@ -1,0 +1,24 @@
+\documentclass{article}
+	\usepackage[utf8]{inputenc}
+	\usepackage[T1]{fontenc}
+	\usepackage{bookman}
+	\usepackage[brazil]{babel}
+	\usepackage{amssymb}
+\begin{document}
+
+\section*{Limites}
+
+O objetivo deste objeto de aprendizagem é facilitar a compreensão da definição formal de limite de uma função de uma variável, $f : \mathbb{R} \to \mathbb{R}$. Para isso o usuário conta com um eixo $x$ (domínio de $f$) e um eixo $y$ (imagem de $f$).
+
+No eixo $x$ estão definidos o ponto $x_0$, onde se quer calcular o limite, e $x$, um ponto na vizinhança de $x_0$, tal $|x_0 - x| < \delta$. Isto é representado na figura pela impossibilidade de arrastar $x$ para longe dos colchetes ao redor de $x_0$, que indicam os limites inferior e superior da vizinhança.
+
+No eixo y estão definidos f(x), que só pode ser alterado arrastando-se x, bem como L, o limite procurado, e a vizinhança de L, de tamanho \epsilon.
+
+A função f é escolhida aleatoriamente pelo _software_ e sua expressão *não* é informada. Ainda assim, o usuário pode determinar o limite de f em x_0 modificando \delta e L de tal modo que o ponto f(x) fique sempre na vizinhança de L.
+
+A atividade fica muito mais interessante se explorada com dois usuários: o primeiro define x_0 e \epsilon, enquanto o segundo comanda x, \delta e L. Assim, o primeiro usuário pede ao segundo que ajuste L e \delta de modo que, para qualquer x, f(x) fique sempre na vizinhança de L (matematicamente, |L - f(x)| < \epsilon). Quando ele conseguir fazer isso, o primeiro usuário reduz $\epsilon$ e novamente solicita ao primeiro que ajuste seus parâmetros. Esse jogo de gato-e-rato pode prosseguir indefinidamente, até que ambos os usuários concordem que $L$ já representa, com adequada acurácia, o limite procurado.
+
+Espera-se que, procedendo desta forma, torne-se mais fácil para o usuário compreender a definição formal de limite: o limite de uma função $f : R -> R$ em x_0 é igual a L se, para qualquer \epsilon > 0 dado, for possível encontrar um \delta > 0 tal que |L - f(x)| < epsilon para qualquer x que satisfaça |x_0 - x| < \delta.
+
+
+\end{document}
