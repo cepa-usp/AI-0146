@@ -1,31 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-  <head>
-  	<title>Objeto de Aprendizagem</title>
-  
-  	<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-  	<script type="text/javascript" src="js/swfobject.js"></script>
-   	<script type="text/javascript" src="js/scorm_wrapper.min.js"></script>
-  	<script type="text/javascript" src="js/ai.js"></script>
-  </head>
-  
-  <body style="background-color:#FFF; text-align:center">
-  
-  	<h1 style="display:none">Centro de Ensino e Pesquisa Aplicada - CEPA</h1>
-  	
-  	<div id="ai-container">
-      <a href="http://www.adobe.com/go/getflash">
-        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Obtenha o Adobe Flash player" />
-      </a>
-    </div>
+	<head>
+		<title>Objeto de Aprendizagem</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		
+		<link type="text/css" rel="stylesheet" href="css/smoothness/jquery-ui-1.8.13.custom.css"/>
+		<link type="text/css" href="css/ai.css" rel="stylesheet"/>
+
+		<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-swfobject.min.js"></script>
+		<script type="text/javascript" src="js/scorm_wrapper.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.13.custom.min.js"></script>
+		<script type="text/javascript" src="js/ai.js"></script>
+		<script type="text/javascript" src="js/frame_transition.js"></script>
+		<script type="text/javascript" src="js/hooks.js"></script>
+		<script type="text/javascript" src="js/frames.js"></script>
+		<script type="text/javascript" src="js/jquery.dialogextend.js"></script>
+	</head>
+	
+	<body>
+		<div id="ai-container">
+			<a href="http://www.adobe.com/go/getflash">
+				<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Obtenha o Adobe Flash player" />
+			</a>
+		</div>
+		
+		<div id="content">
+			<h1>Derivadas parciais <span class="completion-message start-invisible">(atividade concluída)</span></h1>
+			
+			<div id="textArea">
+
+			</div>
+		</div>
+		
+		<div class="line-break"></div>
+		
+		<div id="step-backward" >Voltar</div>
+		<div id="step-forward" >Avançar</div>
+		<div id="reset" >Recomeçar</div>
+      
+		<div id="reset-dialog" class="dialog" title="Confirmação">
+			Você tem certeza de que quer recomeçar esta atividade?
+		</div>
+		
+		<div id="finish-dialog" class="dialog" title="Fim da atividade">
+			Você concluiu esta atividade <span class="foreign">online</span> e acertou <span id="score">0</span> de 8 perguntas.
+			Utilize o fórum para propor experimentos, trocar ideias, dúvidas e dificuldades com seus colegas e tutores.
+		</div>
     
-    <p style="display:none">
-      Este material foi criado pelo Centro de Ensino e Pesquisa Aplicada (<a href="http://cepa.if.usp.br/">CEPA</a>) do Departamento de Física Experimental do Instituto de Física da Universidade de São Paulo, campus capital, e é distribuido conforme a licença Creative Commons Atribuição - Uso não-comercial - Compartilhamento pela mesma licença 3.0 Brasil (CC BY-NC-SA 3.0). 
-      Isto significa que você pode compartilhar ou remixar esta obra, segundo esta mesma licença, desde que cite o autor original (CEPA) e sua página web (cepa.if.usp.br). Você NÃO pode usar esta obra, nem variações dela, para fins comerciais (para este propósito, entre em contato com o CEPA).
-    </p>
-  	
-  </body>
+		<p class="license">
+			Este material foi criado pelo Centro de Ensino e Pesquisa Aplicada (<a href="http://cepa.if.usp.br/" onclick="window.open(this.href);return false;">CEPA</a>) do Departamento de Física Experimental do Instituto de Física da Universidade de São Paulo, campus capital, e é distribuido conforme a licença Creative Commons Atribuição - Uso não-comercial - Compartilhamento pela mesma licença 3.0 Brasil (CC BY-NC-SA 3.0). 
+			Isto significa que você pode compartilhar ou remixar esta obra, segundo esta mesma licença, desde que cite o autor original (CEPA) e sua página web (cepa.if.usp.br). Você NÃO pode usar esta obra, nem variações dela, para fins comerciais (para este propósito, entre em contato com o CEPA).
+		</p>
+		<div id="total" style="visibility:hidden;position:absolute;width:10px;height:10px;border:1px solid red;">
+		obaaaa
+		</div>
+	</body>
 </html>

@@ -9,6 +9,7 @@ function texto0_leaveFrame(){
 /*------------------------------------------------------------------------------------------------*/
 
 function interacao1_enterFrame(){
+	alert("entrou");
 	movie.setX0(2);
 	movie.setEpsilon(3);
 	movie.lockX0(true);
