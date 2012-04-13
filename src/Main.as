@@ -45,8 +45,10 @@ package
 		
 		private var textoExplicativo:TextoExplicativo;
 		private var showAnswer:Boolean = false;
+		private var pontaFlechaFx0:SetaSo;
+		private var pontaFlechaLambda:SetaSo;
 		
-		private var visualizationBtn:TrocarVisao;
+		//private var visualizationBtn:TrocarVisao;
 		
 		public function Main():void 
 		{
@@ -251,6 +253,14 @@ package
 			addChild(nomeFlambda);
 			nomeFlambda.visible = false;
 			
+			pontaFlechaFx0 = new SetaSo();
+			addChild(pontaFlechaFx0);
+			pontaFlechaFx0.visible = false;
+			
+			pontaFlechaLambda = new SetaSo();
+			addChild(pontaFlechaLambda);
+			pontaFlechaLambda.visible = false;
+			
 			redesenhaIndicadores();
 			
 			textoExplicativo = new TextoExplicativo();
@@ -276,13 +286,17 @@ package
 			axisX1.addEventListener(ModelEvent.CHANGE_ZOOM, redesenhaIndicadores);
 			axisX2.addEventListener(ModelEvent.CHANGE_ZOOM, redesenhaIndicadores);
 			
-			visualizationBtn = new TrocarVisao();
-			visualizationBtn.x = stage.stageWidth - visualizationBtn.width / 2 - 10;
-			visualizationBtn.y = 620;
-			visualizationBtn.buttonMode = true;
-			addChild(visualizationBtn);
-			visualizationBtn.gotoAndStop(2);
-			visualizationBtn.addEventListener(MouseEvent.CLICK, changeVisual);
+			//visualizationBtn = new TrocarVisao();
+			//visualizationBtn.x = stage.stageWidth - visualizationBtn.width / 2 - 10;
+			//visualizationBtn.y = 620;
+			//visualizationBtn.buttonMode = true;
+			//addChild(visualizationBtn);
+			//visualizationBtn.gotoAndStop(2);
+			botoes.trocaVisaoBtn.buttonMode = true;
+			botoes.trocaVisaoBtn.gotoAndStop(2);
+			botoes.trocaVisaoBtn.addEventListener(MouseEvent.MOUSE_OVER, function () {botoes.trocaVisaoBtn.inside.scaleX = botoes.trocaVisaoBtn.inside.scaleY = 1.2 } );
+			botoes.trocaVisaoBtn.addEventListener(MouseEvent.MOUSE_OUT, function () {botoes.trocaVisaoBtn.inside.scaleX = botoes.trocaVisaoBtn.inside.scaleY = 1 } );
+			botoes.trocaVisaoBtn.addEventListener(MouseEvent.CLICK, changeVisual);
 			
 		}
 		
@@ -336,7 +350,7 @@ package
 			axisX2.zoomInBtn.addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("Zoom.") } );
 			axisX2.zoomOutBtn.addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("Zoom.") } );
 			
-			visualizationBtn.addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("Alterna os modos de exibição dos eixos.") } );
+			botoes.trocaVisaoBtn.addEventListener(MouseEvent.MOUSE_OVER, function():void { setMessage("Alterna os modos de exibição dos eixos.") } );
 			
 			stage.addEventListener(MouseEvent.MOUSE_OUT, setLabelOfState);
 			
@@ -402,16 +416,19 @@ package
 					//x0Fx0.graphics.beginFill(0x800000);
 					//x0Fx0.graphics.drawCircle(posX0.x, posX0.y + distToPoint, 3);
 					//x0Fx0.graphics.endFill();
-					x0Fx0.graphics.lineStyle(2, 0x800000);
+					x0Fx0.graphics.lineStyle(2, 0xFF0000);
 					x0Fx0.graphics.moveTo(posX0.x, posX0.y + distToPoint);
 					x0Fx0.graphics.curveTo(posX0.x, (posFx0.y - posX0.y)/2 + posX0.y - distToPoint/2, (posFx0.x - posX0.x) / 2 + posX0.x, (posFx0.y - posX0.y)/2 + posX0.y - distToPoint / 2);
-					x0Fx0.graphics.curveTo(posFx0.x, (posFx0.y - posX0.y)/2 + posX0.y - distToPoint/2, posFx0.x, posFx0.y - distToPoint);
-					x0Fx0.graphics.lineTo(posFx0.x - 5, posFx0.y - distToPoint - 15);
-					x0Fx0.graphics.lineTo(posFx0.x + 5, posFx0.y - distToPoint - 15);
-					x0Fx0.graphics.lineTo(posFx0.x, posFx0.y - distToPoint);
+					x0Fx0.graphics.curveTo(posFx0.x, (posFx0.y - posX0.y) / 2 + posX0.y - distToPoint / 2, posFx0.x, posFx0.y - distToPoint - 10);
+					pontaFlechaFx0.x = posFx0.x;
+					pontaFlechaFx0.y = posFx0.y - distToPoint - 10;
+					//x0Fx0.graphics.lineTo(posFx0.x - 5, posFx0.y - distToPoint - 15);
+					//x0Fx0.graphics.lineTo(posFx0.x + 5, posFx0.y - distToPoint - 15);
+					//x0Fx0.graphics.lineTo(posFx0.x, posFx0.y - distToPoint);
 					nomeFx0.x = (posFx0.x - posX0.x) / 2 + posX0.x;
 					nomeFx0.y = (posFx0.y - posX0.y) / 2 + posX0.y - distToPoint / 2;
 					nomeFx0.visible = showAnswer;
+					pontaFlechaFx0.visible = showAnswer;
 				}
 			}
 		}
@@ -467,16 +484,19 @@ package
 					//lambdaFlambda.graphics.beginFill(0x800000);
 					//lambdaFlambda.graphics.drawCircle(posLambda.x, posLambda.y + distToPoint, 3);
 					//lambdaFlambda.graphics.endFill();
-					lambdaFlambda.graphics.lineStyle(2, 0x800000);
+					lambdaFlambda.graphics.lineStyle(2, 0xFF0000);
 					lambdaFlambda.graphics.moveTo(posLambda.x, posLambda.y + distToPoint);
 					lambdaFlambda.graphics.curveTo(posLambda.x, (posFlambda.y - posLambda.y)/2 + posLambda.y - distToPoint/2, (posFlambda.x - posLambda.x) / 2 + posLambda.x, (posFlambda.y - posLambda.y)/2 + posLambda.y - distToPoint / 2);
-					lambdaFlambda.graphics.curveTo(posFlambda.x, (posFlambda.y - posLambda.y)/2 + posLambda.y - distToPoint/2, posFlambda.x, posFlambda.y - distToPoint);
-					lambdaFlambda.graphics.lineTo(posFlambda.x - 5, posFlambda.y - distToPoint - 15);
-					lambdaFlambda.graphics.lineTo(posFlambda.x + 5, posFlambda.y - distToPoint - 15);
-					lambdaFlambda.graphics.lineTo(posFlambda.x, posFlambda.y - distToPoint);
+					lambdaFlambda.graphics.curveTo(posFlambda.x, (posFlambda.y - posLambda.y)/2 + posLambda.y - distToPoint/2, posFlambda.x, posFlambda.y - distToPoint - 10);
+					pontaFlechaLambda.x = posFlambda.x;
+					pontaFlechaLambda.y = posFlambda.y - distToPoint - 10;
+					//lambdaFlambda.graphics.lineTo(posFlambda.x - 5, posFlambda.y - distToPoint - 15);
+					//lambdaFlambda.graphics.lineTo(posFlambda.x + 5, posFlambda.y - distToPoint - 15);
+					//lambdaFlambda.graphics.lineTo(posFlambda.x, posFlambda.y - distToPoint);
 					nomeFlambda.x = (posFlambda.x - posLambda.x) / 2 + posLambda.x;
 					nomeFlambda.y = (posFlambda.y - posLambda.y) / 2 + posLambda.y - distToPoint / 2;
 					nomeFlambda.visible = true;
+					pontaFlechaLambda.visible = true;
 				}
 			}
 		}
@@ -498,6 +518,9 @@ package
 			nomeFx0.visible = false;
 			indicadorX0.visible = false;
 			indicadorX02.visible = false;
+			
+			pontaFlechaFx0.visible = false;
+			pontaFlechaLambda.visible = false;
 			
 			if(eixosParalelos){
 				desenhaIndicadorXfX();
@@ -650,7 +673,7 @@ package
 			indicadorUpX0.visible = false;
 			
 			if (eixosParalelos) {
-				visualizationBtn.gotoAndStop(1);
+				botoes.trocaVisaoBtn.gotoAndStop(1);
 				eixosParalelos = !eixosParalelos;
 				axisX1.yAdjust *= -1;
 				axisX1.drawDelta();
@@ -658,7 +681,7 @@ package
 				Actuate.tween(axisX1, 0.5, { x: 130, y: 600} ).ease(Linear.easeNone);
 				Actuate.tween(axisX2, 0.5, { x: 80, y:550, rotation: -90 } ).ease(Linear.easeNone).onComplete(redesenhaIndicadores);
 			}else {
-				visualizationBtn.gotoAndStop(2);
+				botoes.trocaVisaoBtn.gotoAndStop(2);
 				eixosParalelos = !eixosParalelos;
 				axisX1.yAdjust *= -1;
 				axisX1.drawDelta();
