@@ -8,84 +8,84 @@
 <body>
 	<div id="conteudo">
 		<div id="t1" class="texto">
-			<p>Nesta atividade interativa veremos, passo-a-passo, o conceito de limite de uma função de uma variável. 
-			Você pode refazer este tutorial quantas vezes quiser. <br /></p>
+			<p>Nesta atividade interativa veremos, passo-a-passo, o conceito de limite de uma funÃ§Ã£o de uma variÃ¡vel. 
+			VocÃª pode refazer este tutorial quantas vezes quiser. <br /></p>
 		</div>
 		<div id="t1_2" class="texto">
-			<p>O valor $f$ em $x = x_0$ é simplesmente $f(x_0)$. Mas e se $x$ for um número muito \emph{próximo} de $x_0$, embora diferente? Intuitivamente, podemos responder: ``$f(x)$ será muito próximo de $f(x_0)$''. Este realmente é o caso \emph{na maioria das vezes}, mas nem sempre. Veja esta equação:<br><br>
+			<p>O valor $f$ em $x = x_0$ Ã© simplesmente $f(x_0)$. Mas e se $x$ for um nÃºmero muito \emph{prÃ³ximo} de $x_0$, embora diferente? Intuitivamente, podemos responder: ``$f(x)$ serÃ¡ muito prÃ³ximo de $f(x_0)$''. Este realmente Ã© o caso \emph{na maioria das vezes}, mas nem sempre. Veja esta equaÃ§Ã£o:<br><br>
 				\begin{equation}\label{eq:limite}
 				\lim_{\scriptsize x  \to x_0} f(x) = L.
 				\end{equation}<br><br></p>
 		</div>
 		<div id="t1_3" class="texto">
-			<p>Ela deve ser lida assim: o limite de $f$ quando $x$ tende a $x_0$ ($x \to x_0$) é igual a $L$. Ou seja, se $x$ for muito \emph{próximo} de $x_0$, $f(x)$ será \emph{igual} a $L$, um número que não conhecemos a priori. $L$ é dito ``o limite'' de $f$ em $x_0$.<br>
+			<p>Ela deve ser lida assim: o limite de $f$ quando $x$ tende a $x_0$ ($x \to x_0$) Ã© igual a $L$. Ou seja, se $x$ for muito \emph{prÃ³ximo} de $x_0$, $f(x)$ serÃ¡ \emph{igual} a $L$, um nÃºmero que nÃ£o conhecemos a priori. $L$ Ã© dito ``o limite'' de $f$ em $x_0$.<br>
 		
-			Dois detalhes podem ter passado despercebidos: primeiro, $L$ não é necessariamente igual a $f(x_0)$, embora isto aconteça com frequência (veremos que isto tem a ver com a \emph{continuidade} de $f$). Segundo, dizer que $x$ está \emph{próximo} de $x_0$ tem um significado rigoso. Na verdade, o correto é dizer que $x$ pertence à vizinhança de $x_0$.<br>
+			Dois detalhes podem ter passado despercebidos: primeiro, $L$ nÃ£o Ã© necessariamente igual a $f(x_0)$, embora isto aconteÃ§a com frequÃªncia (veremos que isto tem a ver com a \emph{continuidade} de $f$). Segundo, dizer que $x$ estÃ¡ \emph{prÃ³ximo} de $x_0$ tem um significado rigoso. Na verdade, o correto Ã© dizer que $x$ pertence Ã  vizinhanÃ§a de $x_0$.<br>
 
-			Veja a figura. Você pode arrastar $x$, mas há uma restrição: ele não pode ir muito longe de $x_0$. Especificamente, $|x - x_0| < \delta$. O conjunto dos valores que $x$ pode assumir, de $x_0 - \delta$ até $x_0 + \delta$, é a vizinhança de $x_0$. $\delta$ pode ser qualquer número positivo (desde que a vizinhança permaneça no domínio de $f$, uma preocupação que não temos aqui, pois o domínio de $f$ é $\mathbb{R}$). Certifique-se de que você entendeu isso antes de continuar.<br>
+			Veja a figura. VocÃª pode arrastar $x$, mas hÃ¡ uma restriÃ§Ã£o: ele nÃ£o pode ir muito longe de $x_0$. Especificamente, $|x - x_0| < \delta$. O conjunto dos valores que $x$ pode assumir, de $x_0 - \delta$ atÃ© $x_0 + \delta$, Ã© a vizinhanÃ§a de $x_0$. $\delta$ pode ser qualquer nÃºmero positivo (desde que a vizinhanÃ§a permaneÃ§a no domÃ­nio de $f$, uma preocupaÃ§Ã£o que nÃ£o temos aqui, pois o domÃ­nio de $f$ Ã© $\mathbb{R}$). Certifique-se de que vocÃª entendeu isso antes de continuar.<br>
 			</p>
 		</div>
 		<div id="t2" class="texto">
-			<p>Outro detalhe inerente à equação~\ref{eq:limite} é que $f$ é calculada sempre em $x$, nunca em $x_0$, e resulta no número $f(x)$, também exibido na figura. Assim, à medida que você arrasta $x$ na vizinhança de $x_0$, $f(x)$ varre um intervalo corresponde na imagem de $f$ (faça isso agora).</p>		
+			<p>Outro detalhe inerente Ã  equaÃ§Ã£o~\ref{eq:limite} Ã© que $f$ Ã© calculada sempre em $x$, nunca em $x_0$, e resulta no nÃºmero $f(x)$, tambÃ©m exibido na figura. Assim, Ã  medida que vocÃª arrasta $x$ na vizinhanÃ§a de $x_0$, $f(x)$ varre um intervalo corresponde na imagem de $f$ (faÃ§a isso agora).</p>		
 		</div>
 		<div id="t3" class="texto">
-			<p>Agora, experimente reduzir $\delta$. Note que, com isso, o intervalo de variação de $f(x)$ também diminui. Assim, se fizermos isto indefinidamente, de modo que $x$ e $x_0$ sejam números cada vez mais próximos ($\delta \to 0$), podemos esperar que $f(x)$ também aproxime-se mais e mais de um número qualquer $L$. Este é o limite de $f$ em $x_0$.<br>
+			<p>Agora, experimente reduzir $\delta$. Note que, com isso, o intervalo de variaÃ§Ã£o de $f(x)$ tambÃ©m diminui. Assim, se fizermos isto indefinidamente, de modo que $x$ e $x_0$ sejam nÃºmeros cada vez mais prÃ³ximos ($\delta \to 0$), podemos esperar que $f(x)$ tambÃ©m aproxime-se mais e mais de um nÃºmero qualquer $L$. Este Ã© o limite de $f$ em $x_0$.<br>
 
-			Mas isto só é verdade por que a função usada aqui é contínua (você saberá qual é ela em breve). O problema é que, embora possamos sempre fazer $\delta \to 0$, não podemos garantir que a variação em $f(x)$ também tenda a zero. Nós veremos isto depois.<br>
+			Mas isto sÃ³ Ã© verdade por que a funÃ§Ã£o usada aqui Ã© contÃ­nua (vocÃª saberÃ¡ qual Ã© ela em breve). O problema Ã© que, embora possamos sempre fazer $\delta \to 0$, nÃ£o podemos garantir que a variaÃ§Ã£o em $f(x)$ tambÃ©m tenda a zero. NÃ³s veremos isto depois.<br>
 		</div>
 		<div id="t3_2" class="texto">
-			No momento, a questão a ser respondida é ''que critério podemos usar para dizer que $L$ é de fato o número que procuramos?''. A resposta para esta pergunta levou alguns milhares de anos para ser respondida, mas no escopo desta atividade podemos escrevê-la assim:<br><br>
+			No momento, a questÃ£o a ser respondida Ã© ''que critÃ©rio podemos usar para dizer que $L$ Ã© de fato o nÃºmero que procuramos?''. A resposta para esta pergunta levou alguns milhares de anos para ser respondida, mas no escopo desta atividade podemos escrevÃª-la assim:<br><br>
 
 			\begin{quotation}
-			Se \textbf{eu} escolher um número $\varepsilon$ arbitrariamente pequeno, \textbf{você} poderá encontrar um $\delta$ tal que, para qualquer $x$ na vizinhança de $x_0$, $f(x)$ permanece tão próximo de $L$ que $|L - f(x)| < \varepsilon$.
+			Se \textbf{eu} escolher um nÃºmero $\varepsilon$ arbitrariamente pequeno, \textbf{vocÃª} poderÃ¡ encontrar um $\delta$ tal que, para qualquer $x$ na vizinhanÃ§a de $x_0$, $f(x)$ permanece tÃ£o prÃ³ximo de $L$ que $|L - f(x)| < \varepsilon$.
 			\end{quotation}</p>
 		</div>
 		<div id="t4" class="texto">
-			<p>Nós vamos agora brincar de gato e rato: eu vou escolher $\varepsilon$ e você vai ajustar $L$ e $\delta$, na figura, de modo a satisfazer o critério acima. Em seguida eu vou reduzir $\varepsilon$ e você será obrigado a ajustar novamente $L$ e $\delta$... Note que a inequação $|L - f(x)| < \varepsilon$ é satisfeita quando $f(x)$ fica sempre entre os colchetes ao redor de $L$, na figura.<br><br>
+			<p>NÃ³s vamos agora brincar de gato e rato: eu vou escolher $\varepsilon$ e vocÃª vai ajustar $L$ e $\delta$, na figura, de modo a satisfazer o critÃ©rio acima. Em seguida eu vou reduzir $\varepsilon$ e vocÃª serÃ¡ obrigado a ajustar novamente $L$ e $\delta$... Note que a inequaÃ§Ã£o $|L - f(x)| < \varepsilon$ Ã© satisfeita quando $f(x)$ fica sempre entre os colchetes ao redor de $L$, na figura.<br><br>
 		</div>
 		<div id = "interacao1" class="texto">
-			Calcularemos o limite de $f$ em $x_0 = 2$. Para começar, eu escolhi $\varepsilon = 3$. Agora é a sua vez: ajuste $L = 20$ e $\delta = 1$. Na verdade esses valores iniciais de $L$ e $\delta$ são totalmente arbitrários, mas para simplificar a sua interação com a atividade, ajuste-os conforme solicitado. No final deste tutorial você poderá explorar livremente a figura.</p>
+			Calcularemos o limite de $f$ em $x_0 = 2$. Para comeÃ§ar, eu escolhi $\varepsilon = 3$. Agora Ã© a sua vez: ajuste $L = 20$ e $\delta = 1$. Na verdade esses valores iniciais de $L$ e $\delta$ sÃ£o totalmente arbitrÃ¡rios, mas para simplificar a sua interaÃ§Ã£o com a atividade, ajuste-os conforme solicitado. No final deste tutorial vocÃª poderÃ¡ explorar livremente a figura.</p>
 		</div>
 		<div id="interacao2" class="texto">
-			Pela definição acima, se $L = 20$ for o limite procurado, então podemos arrastar $x$ livremente e sempre obteremos $f(x)$ entre os colchetes ao redor de $L$. Veja se isto acontece.</p>
+			Pela definiÃ§Ã£o acima, se $L = 20$ for o limite procurado, entÃ£o podemos arrastar $x$ livremente e sempre obteremos $f(x)$ entre os colchetes ao redor de $L$. Veja se isto acontece.</p>
 		</div>
 		<div id="t6" class="texto">
-			<p>Como você pôde perceber, em nenhum momento $f(x)$ permaneceu entre os colchetes ao redor de $L$. Ou seja, $|L - f(x)| > \varepsilon$ e, por conseguinte, $L = 20$ \textbf{não} é o valor que procuramos.<br><br>
+			<p>Como vocÃª pÃ´de perceber, em nenhum momento $f(x)$ permaneceu entre os colchetes ao redor de $L$. Ou seja, $|L - f(x)| > \varepsilon$ e, por conseguinte, $L = 20$ \textbf{nÃ£o} Ã© o valor que procuramos.<br><br>
 
-			Na verdade, $L$ deve estar mais próximo de $f(x)$. Escolha um $L$ mais próximo de $f(x)$. Arraste $x$ por toda a vizinhança de $x_0$ e observe o movimento de $f(x)$ para tomar a sua decisão.</p>
+			Na verdade, $L$ deve estar mais prÃ³ximo de $f(x)$. Escolha um $L$ mais prÃ³ximo de $f(x)$. Arraste $x$ por toda a vizinhanÃ§a de $x_0$ e observe o movimento de $f(x)$ para tomar a sua decisÃ£o.</p>
 		</div>
 		<div id="t7" class="texto">
-			<p>\condicional{Usuário escolheu $3 \le L \le 7$}{Muito bom! Parece que você entendeu a ideia.} Eu ajustei $L = 6$ apenas para simplificar, mas poderíamos prosseguir com o valor que você escolheu. Qual é o comportamento de $f(x)$ agora?</p>
+			<p>\condicional{UsuÃ¡rio escolheu $3 \le L \le 7$}{Muito bom! Parece que vocÃª entendeu a ideia.} Eu ajustei $L = 6$ apenas para simplificar, mas poderÃ­amos prosseguir com o valor que vocÃª escolheu. Qual Ã© o comportamento de $f(x)$ agora?</p>
 		</div>
 		<div id="t8" class="texto">
-			<p>Desta vez $f(x)$ hora está dentro do intervalo, hora não. O problema é que a vizinhança de $x_0$ está muito grande. Mas você pode corrigir isso: faça $\delta \approx 0,2$ (é só em $\varepsilon$ que você não pode mexer).</p>
+			<p>Desta vez $f(x)$ hora estÃ¡ dentro do intervalo, hora nÃ£o. O problema Ã© que a vizinhanÃ§a de $x_0$ estÃ¡ muito grande. Mas vocÃª pode corrigir isso: faÃ§a $\delta \approx 0,2$ (Ã© sÃ³ em $\varepsilon$ que vocÃª nÃ£o pode mexer).</p>
 		</div>
 		<div id="interacao3" class="texto">
-			Agora sim: $f(x)$ está sempre contido no intervalo $]L - \varepsilon, L + \varepsilon[$, independentemente de qual seja o $x$ na vizinhança de $x_0$. </p>
+			Agora sim: $f(x)$ estÃ¡ sempre contido no intervalo $]L - \varepsilon, L + \varepsilon[$, independentemente de qual seja o $x$ na vizinhanÃ§a de $x_0$. </p>
 		</div>
 		<div id="interacao4" class="texto">
-			No entanto, ainda pela definição de limite, \textbf{eu} posso reduzir $\varepsilon$. Escolhi $\varepsilon = 1$, diminuindo assim a extensão do intervalo ao redor de $L$, e novamente colocando $f(x)$ fora dele. Verifique.</p>
+			No entanto, ainda pela definiÃ§Ã£o de limite, \textbf{eu} posso reduzir $\varepsilon$. Escolhi $\varepsilon = 1$, diminuindo assim a extensÃ£o do intervalo ao redor de $L$, e novamente colocando $f(x)$ fora dele. Verifique.</p>
 		</div>
 		<div id="t11" class="texto">
-			<p>O que devemos fazer para corrigir isto é, novamente, aproximar $L$ de $f(x)$. Faça $L = 5$ e verifique o comportamento de $f(x)$.</p>
+			<p>O que devemos fazer para corrigir isto Ã©, novamente, aproximar $L$ de $f(x)$. FaÃ§a $L = 5$ e verifique o comportamento de $f(x)$.</p>
 		</div>
 		<div id="interacao5" class="texto">
 			Parece que $f(x)$ voltou a manter-se entre os colchetes. Mas agora eu reduzi ainda mais $\varepsilon$, para $0,5$. Reduza $\delta$ mais um pouco.</p>
 		</div>
 		<div id="interacao6" class="texto">
-			Nós podemos continuar assim indefinidamente, mas creio que você entendeu a ideia e podemos parar por aqui. Agora responda: qual é o valor de $L$ que você encontrou, isto é, qual é o limite de $f$ em $x_0 = 2$?<br><br>
+			NÃ³s podemos continuar assim indefinidamente, mas creio que vocÃª entendeu a ideia e podemos parar por aqui. Agora responda: qual Ã© o valor de $L$ que vocÃª encontrou, isto Ã©, qual Ã© o limite de $f$ em $x_0 = 2$?<br><br>
 			\begin{equation*}
 			\lim_{x \to x_0} f(x) = L = \text{\answerfield \proceed}
 			\end{equation*}<br><br>
 
-			\condicional{Usuário errou}{A resposta correta é $L = 5$. Se você não chegou a este resultado (aproximadamente), refaça os passos acima antes de prosseguir.}</p>
+			\condicional{UsuÃ¡rio errou}{A resposta correta Ã© $L = 5$. Se vocÃª nÃ£o chegou a este resultado (aproximadamente), refaÃ§a os passos acima antes de prosseguir.}</p>
 		</div>
 		<div id="t14" class="texto">
-			<p>Nos passos acima, $f(x) = 2x + 1$. Note que $L = f(2)$. Em palavras, o limite de $f$ em $x_0 = 2$ é simplesmente $f(x_0)$. Quando isto acontece, dizemos que \emph{$f$ é contínua em $x_0$}. Por outro lado, quando isto acontece para \emph{todos} os pontos do domínio de $f$, isto é, não só para $x_0 = 2$, dizemos que \emph{$f$ é contínua} (em todos os pontos).</p>
+			<p>Nos passos acima, $f(x) = 2x + 1$. Note que $L = f(2)$. Em palavras, o limite de $f$ em $x_0 = 2$ Ã© simplesmente $f(x_0)$. Quando isto acontece, dizemos que \emph{$f$ Ã© contÃ­nua em $x_0$}. Por outro lado, quando isto acontece para \emph{todos} os pontos do domÃ­nio de $f$, isto Ã©, nÃ£o sÃ³ para $x_0 = 2$, dizemos que \emph{$f$ Ã© contÃ­nua} (em todos os pontos).</p>
 		</div>
 		<div id="t15" class="texto">
 			<p>\begin{ct}
-			no \foreign{applet}, trocar a função para:<br>
+			no \foreign{applet}, trocar a funÃ§Ã£o para:<br>
 			\begin{equation*}
 				f(x) = \begin{cases}<br>
 				2x & x < 3 \\<br>
@@ -93,10 +93,10 @@
 				\end{cases}.<br>
 			\end{equation*}<br><br>
 
-			Além disso, fazer $x_0 = 3$, $\delta = 1$, $\varepsilon = 3$ e $\text{zoom} = 1$.<br>
+			AlÃ©m disso, fazer $x_0 = 3$, $\delta = 1$, $\varepsilon = 3$ e $\text{zoom} = 1$.<br>
 			\end{ct}<br><br>
 
-			Acontece que este nem sempre é o caso. Na figura acima $f$ foi alterada para<br>
+			Acontece que este nem sempre Ã© o caso. Na figura acima $f$ foi alterada para<br>
 			\begin{equation*}<br>
 			f(x) = \begin{cases}<br>
 				2x & x < 3 \\<br>
@@ -104,21 +104,21 @@
 			\end{cases}<br>
 			\end{equation*}<br><br> 
 
-			Esta função \textbf{não} é contínua.<br><br>
+			Esta funÃ§Ã£o \textbf{nÃ£o} Ã© contÃ­nua.<br><br>
 
-			Agora é com você: todos os elementos da figura podem ser alterados ($x_0$, $x$, $\delta$, $\varepsilon$ e $L$). Reproduza os passos que fizemos há pouco com esta função e responda: é<br>possível encontrar um $L$ quando $x_0 = 3$? Ou seja, $f$ tem limite em $x_0 = 3$?</p>
+			Agora Ã© com vocÃª: todos os elementos da figura podem ser alterados ($x_0$, $x$, $\delta$, $\varepsilon$ e $L$). Reproduza os passos que fizemos hÃ¡ pouco com esta funÃ§Ã£o e responda: Ã©<br>possÃ­vel encontrar um $L$ quando $x_0 = 3$? Ou seja, $f$ tem limite em $x_0 = 3$?</p>
 		</div>
 		<div id="t16" class="texto">
-			<p>Agora que você já passou por tudo isso, leia a definição formal de limites:<br><br>
+			<p>Agora que vocÃª jÃ¡ passou por tudo isso, leia a definiÃ§Ã£o formal de limites:<br><br>
 			\begin{quotation}
 			\begin{equation*}
 				\lim_{x \to x_0} f(x) = L
 			\end{equation*}<br><br>
-			$L$ é o limite da função $f:\mathbb{R} \to \mathbb{R}$ em $x = x_0$ se, qualquer que seja $\varepsilon > 0$, é possível encontrar um $\delta > 0$ tal que $|L - f(x)| < \varepsilon$ para todo $x$ que satisfaz $|x - x_0| < \delta$.<br>
+			$L$ Ã© o limite da funÃ§Ã£o $f:\mathbb{R} \to \mathbb{R}$ em $x = x_0$ se, qualquer que seja $\varepsilon > 0$, Ã© possÃ­vel encontrar um $\delta > 0$ tal que $|L - f(x)| < \varepsilon$ para todo $x$ que satisfaz $|x - x_0| < \delta$.<br>
 			\end{quotation}</p>
 		</div>		
 		<div id="t17" class="texto">
-			<p>Lembre-se: você pode executar este tutorial quantas vezes quiser. Basta pressionar o botão ''recomeçar''.<br></p>
+			<p>Lembre-se: vocÃª pode executar este tutorial quantas vezes quiser. Basta pressionar o botÃ£o ''recomeÃ§ar''.<br></p>
 		</div>		
 	</div>
 </body>
