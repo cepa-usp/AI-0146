@@ -1,4 +1,4 @@
-var TOLERANCE = 0.1; // Tolerância nas respostas: 10%
+var TOLERANCE = 0.02; // Tolerância nas respostas: 2%
 var LOCAL_STORAGE_KEY = "AI-0146";
 var MAX_INIT_TRIES = 60;
 var init_tries = 0;
@@ -92,6 +92,8 @@ function fetch () {
   ans.score = 0;
   ans.learner = "";
   ans.frame = 0;
+  ans.respondidos = {};
+  ans.respondidos["entrada1"] = "";
   
   // Conecta-se ao LMS
   session.connected = scorm.init();
@@ -179,7 +181,7 @@ function checkCallbacks () {
 	try {
 		movie.doNothing();
 		message("Callbacks disponíveis após " + ((t2 - t1)/ 1000) + " segundos.");
-
+		
 		// Recoloca no quadro correto  
 		setFrame(memento.frame);
 

@@ -33,20 +33,12 @@ function setFrame(targetFrame) {
 			var contentElement = content[targetFrame].id;
 			var htmlContent = $(content[targetFrame]).html();
 			$('#textArea').html(htmlContent);
-
 			
-			callEnterFrame(contentElement);
-			
-
-			frame = targetFrame;	
-			memento.frame = frame;
-			//postSetFrameHook(targetFrame);
-			
-			if(frame == 0){
+			if(targetFrame == 0){
 				setForwardButtonEnabled(true);
 				setBackwardButtonEnabled(false);
 				setResetButtonEnabled(false);
-			}else if(frame == N_FRAMES - 1){
+			}else if(targetFrame == N_FRAMES - 1){
 				setForwardButtonEnabled(false);
 				setBackwardButtonEnabled(true);
 				setResetButtonEnabled(true);
@@ -55,6 +47,13 @@ function setFrame(targetFrame) {
 				setBackwardButtonEnabled(true);
 				setResetButtonEnabled(false);
 			}
+			
+			callEnterFrame(contentElement);
+			
+			frame = targetFrame;	
+			memento.frame = frame;
+			commit(memento);
+			//postSetFrameHook(targetFrame);
 	}
 }
 

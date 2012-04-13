@@ -30,8 +30,13 @@
 <resources>
 	<resource identifier="item1_resource" adlcp:scormType="sco" href="index.html" type="webcontent">
     <file href="./index.html"/>
+    <file href="./content.html"/>
     <file href="./js/ai.js"/>
+    <file href="./js/frame_transitions.js"/>
+    <file href="./js/frames.js"/>
+    <file href="./js/hooks.js"/>
 	<file href="./js/jquery-1.4.2.min.js"/>
+	<file href="./js/jquery.dialogextend.js"/>
   	<file href="./js/swfobject.js"/>
    	<file href="./js/scorm_wrapper.min.js"/>
     <file href="./swf/AI-0146.swf"/>
