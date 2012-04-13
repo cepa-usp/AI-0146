@@ -89,7 +89,14 @@ package
 				ExternalInterface.addCallback("getEpsilon", getEpsilon);
 				
 				ExternalInterface.addCallback("doNothing", doNothing);
+				ExternalInterface.addCallback("changeFuntion", changeFunction2);
+				ExternalInterface.addCallback("reset", reset);
 			}
+		}
+		
+		private function changeFunction2(functionNumber:int):void 
+		{
+			modelo.changeFunction(functionNumber);
 		}
 		
 		public function doNothing():void

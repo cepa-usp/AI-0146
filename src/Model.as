@@ -63,12 +63,14 @@ package
 			funcoesContinuas.push(function(x:Number):Number {
 										return x * 6;
 									});
-			
+			*/
 			//----------------- Funções descontinuas ----------------------
 			
 			funcoesDescontinuas.push(function(x:Number):Number {
-										return x * x;
+										if (x < 3) return 2 * x;
+										else return 2 * x + 1;
 									});
+			/*
 			funcoesDescontinuas.push(function(x:Number):Number {
 										return x * x;
 									});
@@ -84,6 +86,20 @@ package
 			funcoesDescontinuas.push(function(x:Number):Number {
 										return x * x;
 									});*/
+		}
+		
+		public function changeFunction(nF:int):void
+		{
+			if (nF == 0) {
+				currentFunctionType = "continua";
+				currentFunction = funcoesContinuas[0];
+			}else if (nF == 1) {
+				currentFunctionType = "descontinua";
+				currentFunction = funcoesDescontinuas[1];
+			}
+			
+			var evt:ModelEvent = new ModelEvent(ModelEvent.CHANGE_FUNCTION, true);
+			evtDispatcher.dispatchEvent(evt);
 		}
 		
 		public function sortCurrentFunction():void 
