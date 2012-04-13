@@ -70,3 +70,16 @@ function interacao6_leaveFrame(){
 
 /*------------------------------------------------------------------------------------------------*/
 
+function interacao7_enterFrame(){
+	movie.changeFuntion(1);
+	movie.setX0(3);
+	movie.setDelta(1);
+	movie.setEpsilon(3);
+	//movie.setZoom(1);
+}
+function interacao7_leaveFrame(){
+	//alert("saiu outro");
+}
+
+/*------------------------------------------------------------------------------------------------*/
+
