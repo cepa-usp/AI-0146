@@ -95,7 +95,7 @@ package
 				currentFunction = funcoesContinuas[0];
 			}else if (nF == 1) {
 				currentFunctionType = "descontinua";
-				currentFunction = funcoesDescontinuas[1];
+				currentFunction = funcoesDescontinuas[0];
 			}
 			
 			var evt:ModelEvent = new ModelEvent(ModelEvent.CHANGE_FUNCTION, true);

@@ -71,6 +71,7 @@ function interacao6_leaveFrame(){
 /*------------------------------------------------------------------------------------------------*/
 
 function interacao7_enterFrame(){
+	alert("changing function");
 	movie.changeFuntion(1);
 	movie.setX0(3);
 	movie.setDelta(1);

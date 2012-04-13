@@ -277,11 +277,14 @@ package
 				draggingPt.setLabel(draggingPt.nomeBase + " = " + draggingPt.eixoPt.toPrecision(nCasas));
 			}
 			
+			var evt:ModelEvent;
+			
 			if(draggingPt.name == Model.LAMBDA){
-				var evt:ModelEvent = new ModelEvent(ModelEvent.CHANGE_LAMBDA, true);
+				evt = new ModelEvent(ModelEvent.CHANGE_LAMBDA, true);
 				evt.propValue = draggingPt.eixoPt;
 				dispatchEvent(evt);
 			}
+			
 		}
 		
 		private function stopDraggingPoint(e:MouseEvent):void 
