@@ -16,10 +16,12 @@
 				\begin{equation}\label{eq:limite}
 				\lim_{\scriptsize x  \to x_0} f(x) = L.
 				\end{equation}<br><br></p>
+			<p>
+			Ela deve ser lida assim: o limite de $f$ quando $x$ tende a $x_0$ ($x \to x_0$) é igual a $L$. Ou seja, se $x$ for muito \emph{próximo} de $x_0$, $f(x)$ será \emph{igual} a $L$, um número que não conhecemos a priori. $L$ é dito ``o limite'' de $f$ em $x_0$.
+			</p>
 		</div>
 		<div id="t1_3" class="texto">
-			<p>Ela deve ser lida assim: o limite de $f$ quando $x$ tende a $x_0$ ($x \to x_0$) é igual a $L$. Ou seja, se $x$ for muito \emph{próximo} de $x_0$, $f(x)$ será \emph{igual} a $L$, um número que não conhecemos a priori. $L$ é dito ``o limite'' de $f$ em $x_0$.<br>
-		
+			<p>
 			Dois detalhes podem ter passado despercebidos: primeiro, $L$ não é necessariamente igual a $f(x_0)$, embora isto aconteça com frequência (veremos que isto tem a ver com a \emph{continuidade} de $f$). Segundo, dizer que $x$ está \emph{próximo} de $x_0$ tem um significado rigoso. Na verdade, o correto é dizer que $x$ pertence à vizinhança de $x_0$.<br>
 
 			Veja a figura. Você pode arrastar $x$, mas há uma restrição: ele não pode ir muito longe de $x_0$. Especificamente, $|x - x_0| < \delta$. O conjunto dos valores que $x$ pode assumir, de $x_0 - \delta$ até $x_0 + \delta$, é a vizinhança de $x_0$. $\delta$ pode ser qualquer número positivo (desde que a vizinhança permaneça no domínio de $f$, uma preocupação que não temos aqui, pois o domínio de $f$ é $\mathbb{R}$). Certifique-se de que você entendeu isso antes de continuar.<br>
@@ -34,6 +36,7 @@
 			Mas isto só é verdade por que a função usada aqui é contínua (você saberá qual é ela em breve). O problema é que, embora possamos sempre fazer $\delta \to 0$, não podemos garantir que a variação em $f(x)$ também tenda a zero. Nós veremos isto depois.<br>
 		</div>
 		<div id="t3_2" class="texto">
+			<p>
 			No momento, a questão a ser respondida é ''que critério podemos usar para dizer que $L$ é de fato o número que procuramos?''. A resposta para esta pergunta levou alguns milhares de anos para ser respondida, mas no escopo desta atividade podemos escrevê-la assim:<br><br>
 
 			\begin{quotation}
@@ -41,12 +44,15 @@
 			\end{quotation}</p>
 		</div>
 		<div id="t4" class="texto">
-			<p>Nós vamos agora brincar de gato e rato: eu vou escolher $\varepsilon$ e você vai ajustar $L$ e $\delta$, na figura, de modo a satisfazer o critério acima. Em seguida eu vou reduzir $\varepsilon$ e você será obrigado a ajustar novamente $L$ e $\delta$... Note que a inequação $|L - f(x)| < \varepsilon$ é satisfeita quando $f(x)$ fica sempre entre os colchetes ao redor de $L$, na figura.<br><br>
+			<p>Nós vamos agora brincar de gato e rato: eu vou escolher $\varepsilon$ e você vai ajustar $L$ e $\delta$, na figura, de modo a satisfazer o critério acima. Em seguida eu vou reduzir $\varepsilon$ e você será obrigado a ajustar novamente $L$ e $\delta$... Note que a inequação $|L - f(x)| < \varepsilon$ é satisfeita quando $f(x)$ fica sempre entre os colchetes ao redor de $L$, na figura.
+			</p>
 		</div>
 		<div id = "interacao1" class="texto">
+			<p>
 			Calcularemos o limite de $f$ em $x_0 = 2$. Para começar, eu escolhi $\varepsilon = 3$. Agora é a sua vez: ajuste $L = 20$ e $\delta = 1$. Na verdade esses valores iniciais de $L$ e $\delta$ são totalmente arbitrários, mas para simplificar a sua interação com a atividade, ajuste-os conforme solicitado. No final deste tutorial você poderá explorar livremente a figura.</p>
 		</div>
 		<div id="interacao2" class="texto">
+			<p>
 			Pela definição acima, se $L = 20$ for o limite procurado, então podemos arrastar $x$ livremente e sempre obteremos $f(x)$ entre os colchetes ao redor de $L$. Veja se isto acontece.</p>
 		</div>
 		<div id="t6" class="texto">
