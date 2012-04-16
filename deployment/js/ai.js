@@ -64,8 +64,8 @@ function callLeaveFrame(contentElement){
  * Encerra a Atividade Interativa (AI)
  */ 
 function uninit () {
-  //commit(memento);
-  //scorm.quit();
+  commit(memento);
+  scorm.quit();
 }
 
 /*
@@ -107,7 +107,6 @@ function fetch () {
   }
   // Se estiver conectado a um LMS, usa SCORM
   else {
-  
     // Obtém o status da AI: concluída ou não.
     var completionstatus = scorm.get("cmi.completion_status");
     
@@ -133,7 +132,8 @@ function fetch () {
         if (stream != "") ans = JSON.parse(stream);
       	ans.learner = scorm.get("cmi.learner_name");
         break;
-    }    
+    } 
+	
   }
   
   return ans;
@@ -157,8 +157,6 @@ function commit (data) {
   // Se estiver conectado a um LMS, usa SCORM
   else {  
 
-    if (session.connected) {
-    
       // Salva no LMS a nota do aluno.
       success = scorm.set("cmi.score.raw", data.score);
       
@@ -168,7 +166,9 @@ function commit (data) {
       // Salva no LMS os demais dados da atividade.
       var stream = JSON.stringify(data);      
       success = scorm.set("cmi.location", stream);
-    }
+	  
+	  scorm.save();
+	  
   }
   
   return success;
