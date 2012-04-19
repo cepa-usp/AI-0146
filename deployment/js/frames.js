@@ -23,8 +23,8 @@ function interacao1_leaveFrame(){
 /*------------------------------------------------------------------------------------------------*/
 
 function interacao2_enterFrame(){
-	if(Math.abs(Math.abs(movie.getL()) - 20) > 2) movie.setL(20);
-	if(Math.abs(Math.abs(movie.getDelta()) - 1) > 0.1) movie.setDelta(1);
+	if(Math.abs(movie.getL() - 20) > 2) movie.setL(20);
+	if(Math.abs(movie.getDelta() - 1) > 0.1) movie.setDelta(1);
 }
 function interacao2_leaveFrame(){
 	//commit(memento);
