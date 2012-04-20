@@ -38,6 +38,13 @@ function setFrame(targetFrame) {
 				setForwardButtonEnabled(true);
 				setBackwardButtonEnabled(false);
 				setResetButtonEnabled(false);
+				
+				if (session.standalone) {
+					$('#nomeAluno').html("N");
+				}else{
+					$('#nomeAluno').html(ans.learner + ", n");
+				}
+				
 			}else if(targetFrame == N_FRAMES - 1){
 				setForwardButtonEnabled(false);
 				setBackwardButtonEnabled(true);

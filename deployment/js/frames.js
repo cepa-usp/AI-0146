@@ -9,6 +9,7 @@ function texto0_leaveFrame(){
 /*------------------------------------------------------------------------------------------------*/
 
 function interacao1_enterFrame(){
+	movie.changeFuntion(1);
 	movie.setX0(2);
 	movie.setEpsilon(3);
 	movie.lockX0(true);
@@ -23,8 +24,8 @@ function interacao1_leaveFrame(){
 /*------------------------------------------------------------------------------------------------*/
 
 function interacao2_enterFrame(){
-	if(Math.abs(Math.abs(movie.getL()) - 20) > 2) movie.setL(20);
-	if(Math.abs(Math.abs(movie.getDelta()) - 1) > 0.1) movie.setDelta(1);
+	if(Math.abs(movie.getL() - 20) > 2) movie.setL(20);
+	if(Math.abs(movie.getDelta() - 1) > 0.1) movie.setDelta(1);
 }
 function interacao2_leaveFrame(){
 	//commit(memento);
@@ -61,7 +62,10 @@ function interacao5_leaveFrame(){
 /*------------------------------------------------------------------------------------------------*/
 
 function interacao6_enterFrame(){
+	movie.changeFuntion(1);
+	
 	$("#wrongAnswer").hide();
+	$("#rightAnswer").hide();
 	$("#responder1").button().click(responde1);
 	if(movie.getDelta() > 0.05) movie.setDelta(0.05);
 	
@@ -74,7 +78,7 @@ function interacao6_enterFrame(){
 		$("#entrada1").attr('disabled', 'disabled');
 		$("#responder1").button({disabled: true});
 		if(checkAnswer(5, parseFloat($("#entrada1").val().replace(",", ".")), TOLERANCE)){
-			
+			$("#rightAnswer").show();
 		}else{
 			$("#wrongAnswer").show();
 		}
@@ -90,7 +94,7 @@ function responde1(){
 			$("#responder1").button({disabled: true});
 			memento.respondidos["entrada1"] = $("#entrada1").val();
 			if(checkAnswer(5, parseFloat($("#entrada1").val().replace(",", ".")), TOLERANCE)){
-				
+				$("#rightAnswer").show();
 			}else{
 				$("#wrongAnswer").show();
 			}

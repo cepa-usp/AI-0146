@@ -78,6 +78,11 @@ function reset () {
   // NÃO ALTERA memento.completed!
   // NÃO ALTERA memento.score!
   // NÃO ALTERA memento.learner!
+  memento.frame = 0;
+  memento.respondidos = {};
+  memento.respondidos["entrada1"] = "";
+  
+  commit(memento);
   
   setFrame(0);
 }
@@ -101,14 +106,16 @@ function fetch () {
   
   // Se estiver rodando como stand-alone, usa local storage (HTML 5)
   if (session.standalone) {
-  
-      var stream = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (stream != null) ans = JSON.parse(stream);
+		var stream = localStorage.getItem(LOCAL_STORAGE_KEY);
+		if (stream != null) ans = JSON.parse(stream);
+	  
   }
   // Se estiver conectado a um LMS, usa SCORM
   else {
+	  scorm.set("cmi.exit", "suspend");
     // Obtém o status da AI: concluída ou não.
     var completionstatus = scorm.get("cmi.completion_status");
+	ans.learner = scorm.get("cmi.learner_name");
     
     switch (completionstatus) {
     
@@ -116,21 +123,18 @@ function fetch () {
       case "not attempted":
       case "unknown":
       default:
-      	ans.learner = scorm.get("cmi.learner_name");
         break;
         
       // Continuando a AI...
       case "incomplete":
-        var stream = scorm.get("cmi.location");
+        var stream = scorm.get("cmi.suspend_data");
         if (stream != "") ans = JSON.parse(stream);
-      	ans.learner = scorm.get("cmi.learner_name");
         break;
         
       // A AI já foi completada.
       case "completed":
-        var stream = scorm.get("cmi.location");
+        var stream = scorm.get("cmi.suspend_data");
         if (stream != "") ans = JSON.parse(stream);
-      	ans.learner = scorm.get("cmi.learner_name");
         break;
     } 
 	
@@ -165,7 +169,7 @@ function commit (data) {
       
       // Salva no LMS os demais dados da atividade.
       var stream = JSON.stringify(data);      
-      success = scorm.set("cmi.location", stream);
+      success = scorm.set("cmi.suspend_data", stream);
 	  
 	  scorm.save();
 	  
