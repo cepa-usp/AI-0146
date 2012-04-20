@@ -52,10 +52,10 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="lib\BaseAssets.swc" />
     <element path="lib\Arte.swc" />
     <element path="lib\textLayout.swc" />
     <element path="lib\tlfruntime.swc" />
+    <element path="lib\BaseAssets.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

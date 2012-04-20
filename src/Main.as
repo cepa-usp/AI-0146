@@ -672,6 +672,9 @@ package
 			indicadorUpLambda.visible = false;
 			indicadorUpX0.visible = false;
 			
+			pontaFlechaFx0.visible = false;
+			pontaFlechaLambda.visible = false;
+			
 			if (eixosParalelos) {
 				botoes.trocaVisaoBtn.gotoAndStop(1);
 				eixosParalelos = !eixosParalelos;
